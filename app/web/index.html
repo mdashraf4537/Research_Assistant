@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content="Evidence-led research workspace" /><title>Research Desk</title><link rel="stylesheet" href="/assets/styles.css" /></head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#workspace"><span class="brand-mark">R</span><span>Research Desk</span></a>
+        <nav class="nav" aria-label="Workspace navigation"><a class="nav-link active" href="#workspace"><span>⌘</span> Workspace</a><a class="nav-link" href="#library"><span>▤</span> Library</a><a class="nav-link" href="#evaluation"><span>◌</span> Evaluation</a></nav>
+        <div class="sidebar-footer"><div id="service-status" class="service-status"><i></i> Connecting</div><p>Your papers stay in your configured local index.</p></div>
+      </aside>
+      <main class="main-content" id="workspace">
+        <header class="topbar"><div><p class="kicker">RESEARCH WORKSPACE</p><h1>Make sense of the evidence.</h1></div><button class="icon-button" id="theme-toggle" type="button" aria-label="Toggle colour theme">◐</button></header>
+        <section class="question-card">
+          <div class="question-card-heading"><div><h2>What would you like to investigate?</h2><p>Answers are grounded in your uploaded research and linked back to the source.</p></div><label class="agent-switch"><input id="agent-mode" type="checkbox" /><span></span> Agent mode</label></div>
+          <form id="ask-form"><textarea id="question" required minlength="3" maxlength="4000" placeholder="Ask a question about your research collection…"></textarea><div class="composer-footer"><div class="suggestions"><button class="prompt-chip" type="button">Summarize the key findings</button><button class="prompt-chip" type="button">Compare the proposed methods</button></div><button id="ask-button" class="primary-button" type="submit">Ask research desk <span>↵</span></button></div></form>
+          <p id="ask-error" class="message error" role="alert"></p>
+        </section>
+        <section id="answer-section" class="answer-panel hidden" aria-live="polite"><div class="panel-heading"><div><p class="kicker">GROUNDED RESPONSE</p><h2>Research answer</h2></div><span id="candidate-count" class="count-pill"></span></div><div id="answer" class="answer-text"></div><div class="sources-heading"><h3>Evidence used</h3><p>Open a source to inspect the retrieved passage.</p></div><div id="citations" class="citation-list"></div></section>
+        <section class="dashboard-grid">
+          <article id="library" class="workspace-card"><div class="panel-heading"><div><p class="kicker">YOUR LIBRARY</p><h2>Add a source</h2></div></div><p class="card-copy">Upload a PDF, text file, or Markdown note. We split it into citeable passages and add it to both semantic and keyword search.</p><form id="upload-form"><label class="upload-zone" for="document"><input id="document" type="file" accept=".pdf,.txt,.md,.markdown" required /><span class="upload-icon">↑</span><strong>Choose a file</strong><small>PDF, TXT, or MD</small></label><button id="upload-button" class="quiet-button full-button" type="submit">Add to library</button></form><p id="upload-result" class="message" role="status"></p></article>
+          <article class="workspace-card"><div class="panel-heading"><div><p class="kicker">RETRIEVAL</p><h2>Search the evidence</h2></div></div><form id="search-form" class="search-form"><input id="search-query" required minlength="1" placeholder="Find a passage…" /><button type="submit" aria-label="Search">⌕</button></form><div id="search-results" class="search-results empty">Search across your indexed research.</div></article>
+          <article id="evaluation" class="workspace-card evaluation-card"><div class="panel-heading"><div><p class="kicker">QUALITY CONTROL</p><h2>Ragas evaluation</h2></div><button id="refresh-evaluation" class="text-button" type="button">Refresh</button></div><div id="evaluation-results" class="evaluation-results empty">No report is available yet.</div><p class="footnote">Run <code>python -m app.evaluation.runner</code> after updating the ground-truth file.</p></article>
+        </section>
+      </main>
+    </div>
+    <script src="/assets/app.js" defer></script>
+  </body>
+</html>
