@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Evidence-led research workspace with Agentic RAG" />
     <title>Research Desk · Agentic RAG</title>
-    <link rel="stylesheet" href="/assets/styles.css?v=1.0.6" />
+    <link rel="stylesheet" href="/assets/styles.css?v=1.0.7" />
   </head>
   <body>
     <!-- Login Screen for First-Time or Unauthenticated Users -->
@@ -46,6 +46,7 @@
           <a class="nav-link active" href="#workspace"><span>⌘</span> Workspace</a>
           <a class="nav-link" href="#library"><span>▤</span> Library</a>
           <a class="nav-link" href="#evaluation"><span>◌</span> Evaluation</a>
+          <a class="nav-link" id="nav-admin-link" href="#admin-section" style="display: none;"><span>🛡️</span> Access Control</a>
         </nav>
         <div class="sidebar-footer">
           <div class="user-tracker-bar">
@@ -61,7 +62,10 @@
             <p class="kicker">RESEARCH WORKSPACE</p>
             <h1>Make sense of the evidence.</h1>
           </div>
-          <button class="icon-button" id="theme-toggle" type="button" aria-label="Toggle colour theme">◐</button>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span id="user-quota-badge" class="quota-pill" title="Query quota">Queries: 0/2</span>
+            <button class="icon-button" id="theme-toggle" type="button" aria-label="Toggle colour theme">◐</button>
+          </div>
         </header>
 
         <section class="question-card">
@@ -291,10 +295,46 @@
             <div id="evaluation-results" class="evaluation-results empty">No report is available yet.</div>
             <p class="footnote">Run <code>python -m app.evaluation.runner</code> after updating the ground-truth file.</p>
           </article>
+
+          <!-- Admin Oversight & Approval Section (Visible Only to Owner) -->
+          <article id="admin-section" class="workspace-card admin-card hidden">
+            <div class="panel-heading">
+              <div>
+                <p class="kicker">OWNER OVERSIGHT (ADMIN)</p>
+                <h2>Access Control &amp; Query Quotas</h2>
+              </div>
+              <button id="refresh-admin-users" class="text-button" type="button">Refresh Users</button>
+            </div>
+            <p class="card-copy">Manage query limits and approve extended access requests to safeguard API budget.</p>
+            <div id="admin-users-table-container" class="admin-table-container">
+              <p class="empty">Loading user access status…</p>
+            </div>
+          </article>
         </section>
       </main>
     </div>
 
-    <script src="/assets/app.js?v=1.0.6" defer></script>
+    <!-- Quota Limit Modal Dialog -->
+    <div id="quota-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <span class="modal-icon">🛡️</span>
+          <h3>Query Quota Reached</h3>
+        </div>
+        <p class="modal-text">
+          To manage API compute costs, each user account starts with <strong>2 complimentary research queries</strong>.
+        </p>
+        <p class="modal-text">
+          You have completed your complimentary quota. Request extended access from the research desk administrator (<code>mdashraf228144@gmail.com</code>) to continue.
+        </p>
+        <div id="quota-modal-status" class="quota-modal-status" style="display: none;"></div>
+        <div class="modal-actions">
+          <button type="button" id="btn-request-access" class="primary-button">Request Extended Access</button>
+          <button type="button" id="btn-close-quota-modal" class="quiet-button">Dismiss</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/assets/app.js?v=1.0.7" defer></script>
   </body>
 </html>

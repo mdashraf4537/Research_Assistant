@@ -13,14 +13,19 @@ from app.answering.web_rag import WebSearchRagService
 from app.core.config import get_settings
 from app.core.errors import UpstreamServiceError
 from app.core.tracking import (
+    approve_user_access,
+    check_user_query_quota,
     delete_user_document,
     get_recent_queries,
     get_tracked_users,
     get_user_documents,
+    get_user_quota_info,
     identify_or_register_user,
     is_document_owned_by_other_users,
     log_user_query,
     record_user_document,
+    reject_user_access,
+    request_user_access,
 )
 from app.evaluation.runner import ground_truth_sha256, load_cached_report
 from app.ingestion.adapters import ChromaChunkStore, OllamaEmbeddingClient
@@ -90,7 +95,37 @@ class IdentifyResponse(BaseModel):
     first_seen_at: str
     last_seen_at: str
     query_count: int
+    query_limit: int = 2
+    approval_status: str = "none"
     is_new: bool
+    is_admin: bool = False
+
+
+class QuotaStatusResponse(BaseModel):
+    email: str
+    is_admin: bool
+    query_count: int
+    query_limit: int
+    approval_status: str
+    approval_requested_at: str | None
+    can_query: bool
+    admin_email: str
+
+
+class RequestApprovalRequest(BaseModel):
+    email: str
+
+
+class ApproveUserRequest(BaseModel):
+    admin_email: str
+    target_email: str
+    additional_queries: int = 10
+    unlimited: bool = False
+
+
+class RejectUserRequest(BaseModel):
+    admin_email: str
+    target_email: str
 
 
 class AdminUsersResponse(BaseModel):
@@ -409,6 +444,62 @@ async def admin_list_users() -> AdminUsersResponse:
     )
 
 
+@router.get(
+    "/auth/quota-status",
+    response_model=QuotaStatusResponse,
+    summary="Get current user query quota and access status",
+)
+async def get_quota_status(email: Annotated[str, Query()]) -> QuotaStatusResponse:
+    settings = get_settings()
+    info = get_user_quota_info(email, settings.admin_email)
+    return QuotaStatusResponse(**info, admin_email=settings.admin_email)
+
+
+@router.post(
+    "/auth/request-approval",
+    response_model=QuotaStatusResponse,
+    summary="Request administrator approval for additional queries",
+)
+async def request_approval(request: RequestApprovalRequest) -> QuotaStatusResponse:
+    settings = get_settings()
+    info = request_user_access(request.email)
+    return QuotaStatusResponse(**info, admin_email=settings.admin_email)
+
+
+@router.post(
+    "/admin/approve",
+    response_model=QuotaStatusResponse,
+    summary="Admin approval to grant additional queries",
+)
+async def approve_user(request: ApproveUserRequest) -> QuotaStatusResponse:
+    settings = get_settings()
+    if request.admin_email.strip().lower() != settings.admin_email.strip().lower():
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Only the administrator can approve query limits."
+        )
+    info = approve_user_access(
+        request.target_email,
+        additional_queries=request.additional_queries,
+        unlimited=request.unlimited,
+    )
+    return QuotaStatusResponse(**info, admin_email=settings.admin_email)
+
+
+@router.post(
+    "/admin/reject",
+    response_model=QuotaStatusResponse,
+    summary="Admin rejection of query limit request",
+)
+async def reject_user(request: RejectUserRequest) -> QuotaStatusResponse:
+    settings = get_settings()
+    if request.admin_email.strip().lower() != settings.admin_email.strip().lower():
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Only the administrator can modify access status."
+        )
+    info = reject_user_access(request.target_email)
+    return QuotaStatusResponse(**info, admin_email=settings.admin_email)
+
+
 @router.post("/ask", response_model=AnswerResponse, summary="Answer from cited research evidence")
 async def ask_research_assistant(
     request: AskRequest,
@@ -420,8 +511,20 @@ async def ask_research_assistant(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Question must be between 3 and 4000 characters.",
         )
-    if request.user_email:
-        log_user_query(request.user_email, question, f"direct:{request.search_mode}")
+    settings = get_settings()
+    user_email = (request.user_email or "").strip().lower()
+    if not user_email:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User email is required to submit research queries.",
+        )
+    allowed, reason, quota_info = check_user_query_quota(user_email, settings.admin_email)
+    if not allowed:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"Query limit reached ({quota_info['query_count']}/{quota_info['query_limit']}). You have used your complimentary queries. Please request administrator approval to continue.",
+        )
+    log_user_query(user_email, question, f"direct:{request.search_mode}")
     try:
         result = await service.answer(question, search_mode=request.search_mode)
     except UpstreamServiceError as exc:
@@ -457,8 +560,20 @@ async def ask_research_agent(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Question must be between 3 and 4000 characters.",
         )
-    if request.user_email:
-        log_user_query(request.user_email, question, "agent")
+    settings = get_settings()
+    user_email = (request.user_email or "").strip().lower()
+    if not user_email:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User email is required to submit research queries.",
+        )
+    allowed, reason, quota_info = check_user_query_quota(user_email, settings.admin_email)
+    if not allowed:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"Query limit reached ({quota_info['query_count']}/{quota_info['query_limit']}). You have used your complimentary queries. Please request administrator approval to continue.",
+        )
+    log_user_query(user_email, question, "agent")
     try:
         result = await service.ask(question)
     except UpstreamServiceError as exc:
@@ -495,8 +610,20 @@ async def ask_plan_research_agent(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Question must be between 3 and 4000 characters.",
         )
-    if request.user_email:
-        log_user_query(request.user_email, question, "plan")
+    settings = get_settings()
+    user_email = (request.user_email or "").strip().lower()
+    if not user_email:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User email is required to submit research queries.",
+        )
+    allowed, reason, quota_info = check_user_query_quota(user_email, settings.admin_email)
+    if not allowed:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"Query limit reached ({quota_info['query_count']}/{quota_info['query_limit']}). You have used your complimentary queries. Please request administrator approval to continue.",
+        )
+    log_user_query(user_email, question, "plan")
     try:
         result = await service.ask(question)
     except UpstreamServiceError as exc:

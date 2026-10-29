@@ -50,6 +50,8 @@ class Settings(BaseSettings):
     deepseek_api_key: SecretStr | None = None
     deepseek_model: str = "deepseek-v4-flash"
     evaluation_deepseek_model: str = "deepseek-v4-flash"
+    admin_email: str = "mdashraf228144@gmail.com"
+    default_query_limit: int = 2
 
     @field_validator("cors_origins", "trusted_hosts", mode="before")
     @classmethod

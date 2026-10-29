@@ -131,3 +131,47 @@ body.dark { --bg:#181a18; --surface:#222522; --ink:#ecf0ea; --muted:#aab3a8; --l
 .dark .login-brand-title { color:var(--ink); }
 .dark .query-card-text { color:#e5eae3; }
 .dark .query-card-text strong { color:var(--accent); }
+
+/* Quota & Access Approval System */
+.quota-pill { font-size:.74rem; font-weight:750; background:var(--accent-soft); color:var(--accent); padding:5px 11px; border-radius:99px; border:1px solid rgba(57,95,74,.2); white-space:nowrap; display:inline-flex; align-items:center; gap:5px; }
+.quota-pill.limit-reached { background:#fae9e7; color:var(--danger); border-color:rgba(184,75,75,.3); }
+.quota-pill.admin-badge { background:#e8ecf4; color:#27436b; border-color:rgba(39,67,107,.25); }
+
+/* Modal Overlay */
+.modal-overlay { position:fixed; inset:0; background:rgba(20,24,20,.65); backdrop-filter:blur(4px); z-index:10005; display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeIn .2s ease-in-out; }
+.modal-overlay.hidden { display:none !important; }
+.modal-card { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:32px 28px; width:min(480px,100%); box-shadow:0 20px 50px rgba(0,0,0,.15); }
+.modal-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.modal-header h3 { font-size:1.15rem; margin:0; font-weight:750; color:var(--ink); }
+.modal-icon { font-size:1.5rem; }
+.modal-text { font-size:.88rem; line-height:1.55; color:#4a504a; margin:0 0 12px; }
+.modal-text code { background:#f1f3ee; padding:2px 6px; border-radius:4px; color:var(--ink); }
+.modal-actions { display:flex; gap:10px; margin-top:20px; justify-content:flex-end; }
+.quota-modal-status { margin:14px 0 0; padding:10px 12px; border-radius:8px; font-size:.82rem; line-height:1.45; }
+.quota-modal-status.pending { background:#fff9e6; color:#875c00; border:1px solid #fae69e; }
+.quota-modal-status.approved { background:#e6f3e9; color:#26704a; border:1px solid #bce2c6; }
+
+/* Admin Access Control Section */
+.admin-card { grid-column:span 2; }
+.admin-table-container { overflow-x:auto; margin-top:16px; }
+.admin-table { width:100%; border-collapse:collapse; font-size:.82rem; text-align:left; }
+.admin-table th, .admin-table td { padding:10px 12px; border-bottom:1px solid var(--line); }
+.admin-table th { background:var(--accent-soft); color:var(--accent); font-weight:750; }
+.admin-table tr:hover { background:rgba(0,0,0,.018); }
+.status-pill { font-size:.7rem; font-weight:750; padding:3px 8px; border-radius:99px; text-transform:uppercase; letter-spacing:.04em; }
+.status-pill.status-pending { background:#fff3cc; color:#805b00; border:1px solid #f2db8a; }
+.status-pill.status-approved { background:#e6f3e9; color:#26704a; }
+.status-pill.status-none { background:#f1f3ee; color:var(--muted); }
+.btn-approve-sm { background:var(--accent); color:#fff; border:0; border-radius:6px; padding:5px 9px; font-size:.72rem; font-weight:700; cursor:pointer; }
+.btn-approve-sm:hover { background:#2c503b; }
+.btn-unlimited-sm { background:#27436b; color:#fff; border:0; border-radius:6px; padding:5px 9px; font-size:.72rem; font-weight:700; cursor:pointer; margin-left:4px; }
+.btn-unlimited-sm:hover { background:#1b3150; }
+
+.dark .modal-card { background:#222522; border-color:#363b35; }
+.dark .modal-header h3 { color:#ecf0ea; }
+.dark .modal-text { color:#c5ccc4; }
+.dark .modal-text code { background:#2d322c; color:#e0eae0; }
+.dark .admin-table tr:hover { background:rgba(255,255,255,.02); }
+.dark .quota-pill { background:#263228; border-color:#3a4e3d; }
+.dark .quota-pill.admin-badge { background:#202b3a; color:#adc6eb; border-color:#2e415b; }
+.dark .admin-table th { background:#283529; }

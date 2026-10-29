@@ -68,6 +68,134 @@ function hideLoginView() {
   }
 }
 
+/* Quota & Access Approval State */
+let currentQuotaInfo = {
+  email: "",
+  is_admin: false,
+  query_count: 0,
+  query_limit: 2,
+  approval_status: "none",
+  approval_requested_at: null,
+  can_query: true,
+  admin_email: "mdashraf228144@gmail.com",
+};
+
+async function fetchQuotaStatus() {
+  const email = getActiveEmail();
+  if (!email) return;
+  try {
+    const data = await request(`/auth/quota-status?email=${encodeURIComponent(email)}`);
+    currentQuotaInfo = data;
+    updateQuotaUI(data);
+  } catch (err) {
+    console.warn("Could not fetch quota status:", err);
+  }
+}
+
+function updateQuotaUI(info) {
+  const badge = $("user-quota-badge");
+  const navAdmin = $("nav-admin-link");
+  const adminSection = $("admin-section");
+
+  if (info.is_admin) {
+    if (badge) {
+      badge.textContent = "Admin: Unlimited 🛡️";
+      badge.className = "quota-pill admin-badge";
+      badge.title = "Administrator session with unlimited queries";
+    }
+    if (navAdmin) navAdmin.style.display = "flex";
+    if (adminSection) adminSection.classList.remove("hidden");
+    loadAdminUsers();
+  } else {
+    if (navAdmin) navAdmin.style.display = "none";
+    if (adminSection) adminSection.classList.add("hidden");
+    if (badge) {
+      badge.textContent = `Queries: ${info.query_count}/${info.query_limit}`;
+      if (info.query_count >= info.query_limit) {
+        badge.className = "quota-pill limit-reached";
+        badge.title = "Complimentary query quota reached. Click to request extended access.";
+      } else {
+        badge.className = "quota-pill";
+        badge.title = `${info.query_limit - info.query_count} complimentary queries remaining.`;
+      }
+    }
+  }
+}
+
+function showQuotaModal() {
+  const modal = $("quota-modal");
+  const statusEl = $("quota-modal-status");
+  const reqBtn = $("btn-request-access");
+  if (!modal) return;
+
+  if (statusEl) {
+    if (currentQuotaInfo.approval_status === "pending") {
+      statusEl.style.display = "block";
+      statusEl.className = "quota-modal-status pending";
+      const timeStr = currentQuotaInfo.approval_requested_at ? new Date(currentQuotaInfo.approval_requested_at).toLocaleTimeString() : "recently";
+      statusEl.innerHTML = `<strong>⏳ Status: Pending Approval</strong><br>Your request was submitted ${timeStr}. Awaiting authorization from ${escapeHtml(currentQuotaInfo.admin_email)}.`;
+      if (reqBtn) {
+        reqBtn.disabled = true;
+        reqBtn.textContent = "Approval Pending…";
+      }
+    } else if (currentQuotaInfo.approval_status === "approved" && currentQuotaInfo.can_query) {
+      statusEl.style.display = "block";
+      statusEl.className = "quota-modal-status approved";
+      statusEl.innerHTML = `<strong>✅ Status: Approved</strong><br>Your extended access has been approved! You have ${currentQuotaInfo.query_limit - currentQuotaInfo.query_count} queries available.`;
+      if (reqBtn) {
+        reqBtn.disabled = true;
+        reqBtn.textContent = "Access Granted";
+      }
+    } else {
+      statusEl.style.display = "none";
+      if (reqBtn) {
+        reqBtn.disabled = false;
+        reqBtn.textContent = "Request Extended Access";
+      }
+    }
+  }
+  modal.classList.remove("hidden");
+}
+
+function hideQuotaModal() {
+  const modal = $("quota-modal");
+  if (modal) modal.classList.add("hidden");
+}
+
+$("btn-close-quota-modal")?.addEventListener("click", hideQuotaModal);
+$("user-quota-badge")?.addEventListener("click", () => {
+  if (!currentQuotaInfo.is_admin) showQuotaModal();
+});
+
+$("btn-request-access")?.addEventListener("click", async () => {
+  const reqBtn = $("btn-request-access");
+  const statusEl = $("quota-modal-status");
+  const email = getActiveEmail();
+  if (!email) return;
+
+  setBusy(reqBtn, true, "Submitting request…");
+  try {
+    const data = await request("/auth/request-approval", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    currentQuotaInfo = data;
+    if (statusEl) {
+      statusEl.style.display = "block";
+      statusEl.className = "quota-modal-status pending";
+      statusEl.innerHTML = `<strong>⏳ Request Submitted!</strong><br>Administrator (${escapeHtml(data.admin_email)}) has been requested to grant additional query quota.`;
+    }
+    reqBtn.disabled = true;
+    reqBtn.textContent = "Approval Pending…";
+    updateQuotaUI(data);
+  } catch (err) {
+    alert(`Could not submit request: ${err.message}`);
+  } finally {
+    setBusy(reqBtn, false);
+  }
+});
+
 function checkUserSession() {
   const email = getActiveEmail();
   if (!email) {
@@ -78,6 +206,7 @@ function checkUserSession() {
     hideLoginView();
     loadLibrary();
     loadEvaluation();
+    fetchQuotaStatus();
   }
 }
 
@@ -107,6 +236,7 @@ $("login-form")?.addEventListener("submit", async (e) => {
     hideLoginView();
     await loadLibrary();
     loadEvaluation();
+    await fetchQuotaStatus();
   } catch (err) {
     if (errorEl) errorEl.textContent = err.message || "Failed to identify user.";
   } finally {
@@ -118,12 +248,15 @@ $("btn-logout")?.addEventListener("click", () => {
   localStorage.removeItem("research_user_email");
   sessionStorage.clear();
   window.currentDocCount = 0;
+  currentQuotaInfo = { query_count: 0, query_limit: 2, is_admin: false, can_query: true, approval_status: "none" };
   updateActiveUserDisplay("");
   if ($("library-documents-list")) $("library-documents-list").innerHTML = "<p class='empty'>No papers indexed yet.</p>";
   if ($("document-count")) $("document-count").textContent = "0";
   if ($("answer-section")) $("answer-section").classList.add("hidden");
   if ($("answer")) $("answer").innerHTML = "";
   if ($("question")) $("question").value = "";
+  if ($("nav-admin-link")) $("nav-admin-link").style.display = "none";
+  if ($("admin-section")) $("admin-section").classList.add("hidden");
   renderDynamicQueries(0);
   showLoginView();
 });
@@ -574,6 +707,12 @@ $("ask-form").addEventListener("submit", async (event) => {
     return;
   }
 
+  // Pre-flight quota check: ensure user has quota remaining
+  if (!currentQuotaInfo.can_query) {
+    showQuotaModal();
+    return;
+  }
+
   const busyLabels = {
     direct: "Searching evidence…",
     agent: "Agent coordinating tools…",
@@ -634,8 +773,16 @@ $("ask-form").addEventListener("submit", async (event) => {
     renderCitations(result.citations || []);
     $("answer-section").classList.remove("hidden");
     $("answer-section").scrollIntoView({ behavior: "smooth", block: "start" });
+
+    // Refresh quota badge after successful query
+    await fetchQuotaStatus();
   } catch (problem) {
-    error.textContent = problem.message;
+    if (problem.message && (problem.message.includes("Query limit reached") || problem.message.includes("complimentary queries"))) {
+      await fetchQuotaStatus();
+      showQuotaModal();
+    } else {
+      error.textContent = problem.message;
+    }
   } finally {
     setBusy(button, false);
   }
@@ -779,6 +926,100 @@ async function loadEvaluation() {
 
 $("refresh-evaluation")?.addEventListener("click", loadEvaluation);
 $("theme-toggle")?.addEventListener("click", () => document.body.classList.toggle("dark"));
+
+// Admin Access & User Quota Management
+async function loadAdminUsers() {
+  const target = $("admin-users-table-container");
+  if (!target || !currentQuotaInfo.is_admin) return;
+
+  try {
+    const data = await request("/admin/users");
+    const users = data.users || [];
+    if (!users.length) {
+      target.innerHTML = "<p class='empty'>No user activity recorded yet.</p>";
+      return;
+    }
+
+    target.innerHTML = `
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>User Email</th>
+            <th>Queries Used</th>
+            <th>Quota Limit</th>
+            <th>Access Status</th>
+            <th>Grant Access</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${users
+            .map((u) => {
+              const statusClass =
+                u.approval_status === "pending"
+                  ? "status-pending"
+                  : u.approval_status === "approved"
+                  ? "status-approved"
+                  : "status-none";
+              const isOwner = u.email.toLowerCase() === currentQuotaInfo.admin_email.toLowerCase();
+              return `
+                <tr>
+                  <td><strong>${escapeHtml(u.email)}</strong> ${
+                isOwner ? '<span class="status-pill status-approved">OWNER</span>' : ""
+              }</td>
+                  <td>${u.query_count}</td>
+                  <td>${isOwner ? "Unlimited" : u.query_limit}</td>
+                  <td><span class="status-pill ${statusClass}">${escapeHtml(u.approval_status || "none")}</span></td>
+                  <td>
+                    ${
+                      isOwner
+                        ? "<em>Administrator</em>"
+                        : `
+                          <button type="button" class="btn-approve-sm" onclick="approveUser('${escapeHtml(
+                            u.email
+                          )}', 10, false)">+10 Queries</button>
+                          <button type="button" class="btn-unlimited-sm" onclick="approveUser('${escapeHtml(
+                            u.email
+                          )}', 0, true)">Unlimited</button>
+                        `
+                    }
+                  </td>
+                </tr>
+              `;
+            })
+            .join("")}
+        </tbody>
+      </table>
+    `;
+  } catch (err) {
+    target.innerHTML = `<p class="empty error">Could not load users: ${escapeHtml(err.message)}</p>`;
+  }
+}
+
+window.approveUser = async function (targetEmail, additionalQueries, unlimited) {
+  const adminEmail = getActiveEmail();
+  try {
+    await request("/admin/approve", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        admin_email: adminEmail,
+        target_email: targetEmail,
+        additional_queries: additionalQueries,
+        unlimited: unlimited,
+      }),
+    });
+    alert(
+      `Access granted for ${targetEmail}! (${
+        unlimited ? "Unlimited access granted" : `+${additionalQueries} queries added`
+      })`
+    );
+    await loadAdminUsers();
+  } catch (err) {
+    alert(`Could not approve user: ${err.message}`);
+  }
+};
+
+$("refresh-admin-users")?.addEventListener("click", loadAdminUsers);
 
 // Initialize subpage cards and mode
 wireSubpageCards();
