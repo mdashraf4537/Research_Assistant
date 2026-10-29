@@ -708,7 +708,7 @@ async def latest_evaluation() -> EvaluationSummaryResponse:
         # Prefer the cached report for the current ground-truth file.  A report
         # from a different dataset may be newer, but must not be shown as this
         # dataset's quality result on the dashboard.
-        dataset_path = Path("data/evaluations/ground_truth.json")
+        dataset_path = results_directory.parent / "ground_truth.json"
         cached = (
             load_cached_report(results_directory, ground_truth_sha256(dataset_path))
             if dataset_path.exists()

@@ -26,11 +26,15 @@ pytest-of-ASUS/
 .DS_Store
 Thumbs.db
 
-# Runtime database & vector stores (generated at runtime)
-data/chroma/
-data/*.db
-data/*.sqlite3
-data/evaluations/results/
+# Runtime database & vector stores
+# Note: Pre-computed Chroma, BM25 lexical index, user tracking, and evaluation results
+# are tracked so they persist across Render ephemeral container rebuilds.
+!data/chroma/
+!data/chroma/**
+!data/*.db
+!data/*.sqlite3
+!data/evaluations/results/
+!data/evaluations/results/*.json
 !data/evaluations/ground_truth.json
 
 # Temporary working folders

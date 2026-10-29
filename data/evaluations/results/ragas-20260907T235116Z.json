@@ -1,0 +1,74 @@
+{
+  "created_at": "2026-09-07T23:51:16.376980+00:00",
+  "dataset_size": 2,
+  "averages": {
+    "faithfulness": 0.0,
+    "factual_correctness": 0.335,
+    "context_precision": 0.0,
+    "context_recall": 0.0
+  },
+  "targets": {
+    "faithfulness": 0.85,
+    "factual_correctness": 0.8,
+    "context_precision": 0.75,
+    "context_recall": 0.8
+  },
+  "passed": false,
+  "cases": [
+    {
+      "user_input": "What was the overall test accuracy achieved by the ResNet-18 model in this study?",
+      "response": "The overall test accuracy achieved by the ResNet-18 model was 95% on the independent test set [S1].",
+      "reference": "The model performed with 95% test accuracy with good performance across all classes.",
+      "retrieved_contexts": [
+        "AI 2025, 6, 202 11 of 22\nthese phases is a hallmark of successful learning without deep overfitting. The relatively\nsmall gap between training and validation accuracy is a sign of the great generalization\nability of the trained model. This implies that the model not only learned from the new data\nbut also managed to preserve its capability to generalize well with new unseen examples.\n \n \n \n \n \n \n \n \n \n \n \nFigure 3. Training and Validation Accuracy Curves.\n4.2. Test Set Performance\nFollowing the ",
+        "The XRAI deployment was paired with the fine-tuned ResNet-18 model with the\nsaliency library. An explainability pipeline was created to pass CT brain images through the\nsame preprocessing transformations as during training, such as resizing to224 × 224 pixels,\nconverting to RGB from grayscale, and normalizing. The model’s prediction for each input\nimage was retrieved, and XRAI attribution maps were created by calculating input–output\ngradients for the predicted class. The attribution scores were",
+        "Appl. Sci. 2025, 15, 4639 16 of 28\nTable 4. Evaluation metrics of deep learning models and hybrid approach.\nModel Accuracy Precision Recall F1-Score\nRNN Model 0.89 0.90 0.91 0.90\nLSTM Model 0.84 0.89 0.90 0.90\nCNN Model 0.70 0.74 0.91 0.83\nProposed\nHybrid Model 0.92 0.90 0.91 0.90\nAppl. Sci. 2025, 15, x FOR PEER REVIEW 16 of 28 \n \n  \n(a) (b) \n  \n(c) (d) \nFigure 7. Accuracy comparison RNN, LSTM, CNN, and combined models. ( a) Accuracy of RNN \nmodel, (b) accuracy of LSTM model, (c) accuracy of CNN",
+        "Appl. Sci. 2025, 15, 4639 17 of 28\nTable 5. Evaluation metrics of deep learning models and hybrid approach after data augmentation.\nModel Accuracy Precision Recall F1-Score\nRNN Model 0.94 0.95 0.94 0.95\nLSTM Model 0.95 0.96 0.96 0.96\nCNN Model 0.70 0.76 0.73 0.75\nProposed\nHybrid Model 0.96 0.94 0.97 0.95\nAppl. Sci. 2025, 15, x FOR PEER REVIEW 17 of 28 \n \n  \n(a) (b) \n  \n(c) (d) \nFigure 8. Post-augmentation accuracy comparison. ( a)  A c c u r a c y  o f  R N N  m o d e l ,  (b) accuracy of \nLSTM ",
+        "The VGG-16’s\nfinal classification layer was modified to output six classes, and data augmentation tech-\nniques (e.g., rotations and contrast enhancement) were applied to improve robustness\nduring fine-tuning. Despite the limited training data per class, the model achieved high\nperformance—about 86.5% overall accuracy, with ~85.9% precision, ~86.2% recall, and",
+        "TP and\nTN are correctly predicted, while FP and FN are incorrectly predicted. The formula for\naccuracy is as follows:\nAccuracy = TP + TN\nTP + TN + FP + FN (1)\nPrecision: This metric indicates how many predicted positive values are positive. The\nformula for precision is as follows:\nPrecision = TP\nTP + FP (2)\nRecall: Recall measures how well the model identifies true positive instances (e.g., detecting\nall actual stroke cases). The formula for recall is as follows:\nRecall = TP\nTP + FN (3)\nF1 Score",
+        "Eng. Proc. 2025, 107, 123 9 of 11\nFigure 2. Results of classifiers.\n4.1. Accuracy\nAccuracy is the percentage of accurately predicted cases to all the cases. That performance\nmeasure is the most often utilized one. With an accuracy of 95.05%, for example, the Random\nForest model produced 95.05% of all the right predictions out of all the ones generated.\n4.2. Precision\nPrecision, then, is the percentage of accurate positive forecasts. When false positives are\nexpensive, this is a vital statistic. ",
+        "Accuracy comparison RNN, LSTM, CNN, and combined models. ( a) Accuracy of RNN\nmodel, (b) accuracy of LSTM model, (c) accuracy of CNN model, (d) accuracy of hybrid model.\nTable 5 demonstrate how successful the suggested hybrid technique is when compar-\ning the post-augmentation accuracy of various models. The accuracy scores of the RNN,\nLSTM, and CNN models were 0.94, 0.95, and 0.70, respectively. The precision and recall of\nthe LSTM model were marginally higher. With an accuracy of 0.96, the hyb"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "Which machine learning algorithm achieved the best accuracy and what was it?",
+      "response": "The Random Forest model achieved the best accuracy at 95.05% [S1]. It had a classification error of 4.95% [S1]. The text also states that \"The highest accuracy and recall were achieved by Random Forest\" [S2].",
+      "reference": "The Random Forest model produced the best accuracy at 95.05%.",
+      "retrieved_contexts": [
+        "Eng. Proc. 2025, 107, 123 8 of 11\nchoose and apply classifiers to the model. The best performance has been achieved using\nnearly 5 methods.\nFigure 1. Proposed framework.\n4. Results\nPromising results of using many machine learning techniques to forecast brain stroke\nrisk were achieved as shown in Figure 2. With a classification error of 4.95%, the Random\nForest model produced the best accuracy at 95.05%, therefore showing its great performance.\nWith both precision and recall for this model set at",
+        "Eng. Proc. 2025, 107, 123 9 of 11\nFigure 2. Results of classifiers.\n4.1. Accuracy\nAccuracy is the percentage of accurately predicted cases to all the cases. That performance\nmeasure is the most often utilized one. With an accuracy of 95.05%, for example, the Random\nForest model produced 95.05% of all the right predictions out of all the ones generated.\n4.2. Precision\nPrecision, then, is the percentage of accurate positive forecasts. When false positives are\nexpensive, this is a vital statistic. ",
+        "Table 4. Accuracy of various algorithms from the literature.\nRef. Year Accuracy Algorithms\n[1] 2009 90.00% CT images\n[2] 2019 99.99% Bayesian classifier, RF, KNN, SVMLinear, SVMBRF\n[3] 2019 98.41% KNN-OLF-SVM\n[4] 2019 99.8% Naive Bayes, J48, k-NN, RF in WEKA toolkit\n[5] 2020 86.42% DT, RF, EM, GNB, and DNN\n[6] 2020 94.23% DT, GNB, LR, L-SVM, P-SVM, RBG SVM, RF, AB, and AB with SGD\n[7] 2020 97% LR, SGD, DT, AB, Gaussian, QDA, MLP , KNN, GB, and XGB\n[8] 2020 99.73% DT, AB, RF, NB, KNN, SVM, MLP , ",
+        "Eng. Proc. 2025, 107, 123 6 of 11\nrealm of contemporary artificial intelligence. When it comes to predicting cardiovascular\ndisease (CVD), ANNs have shown promising outcomes. Thus, in this article, a model\nfor stroke prediction using artificial neural networks (ANNs) is constructed using the\nphysiological data of the patients. With 1000 iterations of cross-validation, the ANNs\napproach presented in this research may achieve about 98% classification accuracy [ 17].\nThis study predicts the likelih",
+        "Accuracy comparison RNN, LSTM, CNN, and combined models. ( a) Accuracy of RNN\nmodel, (b) accuracy of LSTM model, (c) accuracy of CNN model, (d) accuracy of hybrid model.\nTable 5 demonstrate how successful the suggested hybrid technique is when compar-\ning the post-augmentation accuracy of various models. The accuracy scores of the RNN,\nLSTM, and CNN models were 0.94, 0.95, and 0.70, respectively. The precision and recall of\nthe LSTM model were marginally higher. With an accuracy of 0.96, the hyb",
+        "Appl. Sci. 2025, 15, 4639 16 of 28\nTable 4. Evaluation metrics of deep learning models and hybrid approach.\nModel Accuracy Precision Recall F1-Score\nRNN Model 0.89 0.90 0.91 0.90\nLSTM Model 0.84 0.89 0.90 0.90\nCNN Model 0.70 0.74 0.91 0.83\nProposed\nHybrid Model 0.92 0.90 0.91 0.90\nAppl. Sci. 2025, 15, x FOR PEER REVIEW 16 of 28 \n \n  \n(a) (b) \n  \n(c) (d) \nFigure 7. Accuracy comparison RNN, LSTM, CNN, and combined models. ( a) Accuracy of RNN \nmodel, (b) accuracy of LSTM model, (c) accuracy of CNN",
+        "Eng. Proc. 2025, 107, 123 10 of 11\nTable 4 presents a comparison of various studies conducted in different years using\ndifferent datasets to achieve the highest accuracy.\nTable 4. Accuracy of various algorithms from the literature.\nRef.",
+        "2022, 13. [CrossRef]\n97. Shoily, T.I.; Islam, T.; Jannat, S.; Tanna, S.A.; Alif, T.M.; Ema, R.R. Detection of stroke disease using machine learning algorithms. In\nProceedings of the 2019 10th International Conference on Computing, Communication and Networking Technologies (ICCCNT),\nKanpur, India, 6–8 July 2019; IEEE: New York, NY, USA; pp. 1–6."
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.67,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    }
+  ],
+  "dataset_sha256": "b3d52d5c0199e9c0a1fa48597b76dcdc5eef2e283ecdc0108ae5602bfa76a29e"
+}

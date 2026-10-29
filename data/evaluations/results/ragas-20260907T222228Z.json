@@ -1,0 +1,127 @@
+{
+  "created_at": "2026-09-07T22:22:28.933649+00:00",
+  "dataset_size": 4,
+  "averages": {
+    "faithfulness": 0.1,
+    "factual_correctness": 0.0,
+    "context_precision": 0.75,
+    "context_recall": 0.125
+  },
+  "targets": {
+    "faithfulness": 0.85,
+    "factual_correctness": 0.8,
+    "context_precision": 0.75,
+    "context_recall": 0.8
+  },
+  "passed": false,
+  "cases": [
+    {
+      "user_input": "Which StyleGAN data augmentation approach demonstrated the best performance?",
+      "response": "StyleGAN3 (SG3) demonstrated the best performance among the StyleGAN data augmentation approaches evaluated [S1][S3][S4]. It achieved the highest Macro_F1-score (0.782 ± 0.03) and Weighted_F1-score (0.834 ± 0.02), outperforming StyleGAN2 and Conditional StyleGAN3 in classification metrics on imbalanced stroke data [S1].",
+      "reference": "StyleGAN3 outperformed other approaches in precision, recall, and F1-score for imbalanced classification.",
+      "retrieved_contexts": [
+        "Eng. Proc. 2026, 120, 26 6 of 8\nbeen improved from 0.580± 0.07 by SG2 to 0.659± 0.05 by SG3. This indicated that SG3’s\nalias-free architecture effectively enhanced performance for the difficult-to-classify minority\nstroke class. For the normal class, precision and recall remained high across all three\nStyleGAN-based approaches. This demonstrated that the data augmentation strategies\ndid not compromise the classification performance of the majority class. From Table 2,\nSG3 outperformed the other ",
+        "Eng. Proc. 2026, 120, 26 4 of 8\nLG =−Ez∼p(z),c∼pdt(c)[D(G(z, c), c)] + λpath·Lpath (10)\nwhere Lpath is defined as Equation (4).\n3. Methodology\nThe research method for generating synthetic stroke images is depicted in Figure 1.\nFigure 1. Stroke data augmentation using StyleGAN.\n3.1. StyleGAN Models for Stroke Image Generation\nThe developed method comprised two modules: StyleGAN models, such as Style-\nGAN2 (SG2), StyleGAN3 (SG3), and conditional StyleGAN3 (CSG3), to extend training\ndata size, and ",
+        "Recently,\nStyleGAN3 has introduced alias-free convolution to effectively avoid aliasing issues for\ngenerated images [13], ensuring virtual image correctness after rotation or translation. Fur-\nthermore, conditional StyleGAN3 can produce virtual images according to specific label(s).\nIn this study, we applied a StyleGAN-based model to boost imbalanced stroke detec-\ntion performance by balancing class distribution. Furthermore, we adopted an ensemble\nlearning predictive model to integrate predicti",
+        "Eng. Proc. 2026, 120, 26 7 of 8\nFigure 3. FID results for StyleGAN2, StyleGAN3, and conditional StyleGAN3.\n5. Conclusions\nTo address the class imbalance problem in stroke classification, we compared\nStyleGAN-based over-sampling models: StyleGAN2, StyleGAN3, and conditional Style-\nGAN3. We selected the best generative model among them. Although the SG3 model\nachieved the best classification performance with an ensemble learning model, on genera-\ntion quality and model generalization, StyleGAN3 sh",
+        "Eng. Proc. 2026, 120, 26 3 of 8\nDiscriminator loss is calculated as follows:\nLD = E∼\nx∼Pg\nh\nD\n\u0010∼\nx\n\u0011i\n− Ex∼Pr [D(x)] + λE ˆx∼Pˆx\nh\n(|∇ ˆxD( ˆx)|2− 1)2\ni\n(2)\nGenerator loss is calculated as follows:\nLG =−Ez∼p(z)[D(G(z))] (3)\nIt includes the following path length regularization loss.\nLpath = Ew,y(|Jw(G(w))·y|2− a)2 (4)\nTotal generator loss is calculated as follows:\nLtotal\nG =LG + λpath·Lpath (5)\n2.2. StyleGAN3\nStyleGAN3 (SG3) builds upon StyleGAN2 with the same loss function and path\nregularizatio",
+        "4401–4410.\n11. Karras, T.; Laine, S.; Aittala, M.; Hellsten, J.; Lehtinen, J.; Aila, T. Analyzing and improving the image quality of stylegan. In\nProceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, Seattle, WA, USA, 14–19 June 2020;\npp. 8110–8119.\n12. Karras, T.; Aittala, M.; Hellsten, J.; Laine, S.; Lehtinen, J.; Aila, T. Training generative adversarial networks with limited data. Adv.\nNeural Inf. Process. Syst. 2020, 33, 12104–12114.\n13. Karras, T.; Aittala, M.; ",
+        "When comparing\nthe best-performing versions of each architecture, ConvNeXt with cGAN achieved the\nnext highest accuracy at 97.45%, followed by TNT with cGAN at 96.00%. These findings\nhighlight the superior generalization capability of MaxViT regardless of the augmentation",
+        "The VGG-16’s\nfinal classification layer was modified to output six classes, and data augmentation tech-\nniques (e.g., rotations and contrast enhancement) were applied to improve robustness\nduring fine-tuning. Despite the limited training data per class, the model achieved high\nperformance—about 86.5% overall accuracy, with ~85.9% precision, ~86.2% recall, and"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What hardware specs were used to conduct the experiments?",
+      "response": "The experiments were conducted on the following hardware, depending on the phase:\n\n- **Local laptop (initial development/testing):** ASUS X415JF with an Intel Core i7 (10th generation) processor, NVIDIA GeForce MX330 GPU, 16 GB RAM, and a 1 TB SSD [S1].\n- **Cloud environment (large-scale training):** Google Colab Pro, which provided access to high-performance GPUs—specifically Tesla T4 and P100—and extended memory capacity [S1].\n- **Additional confirmation (separate experiment):** Training was also conducted on a T4 GPU with a batch size of 32 per optimization step [S2].",
+      "reference": "Experiments were run on an Intel Core i7-14700KF CPU and Nvidia GeForce RTX 4090 GPU (24 GB VRAM) on Ubuntu 24.04 LTS.",
+      "retrieved_contexts": [
+        "Diagnostics 2025, 15, 2486 15 of 23\nand 664 for Hemorrhagic). Overall, the qualitative advancement demonstrates that cGAN\neffectively captures modality-specific stroke features.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nFigure 3. Progressive synthetic CT-scan images generated by the conditional GAN (cGAN) for the\nIschemic (top row) and Hemorrhagic (bottom row) stroke classes. Images in the leftmost columns\n(e.g., Epochs 125–130) show lower visual quality during early training, whereas images in the\nri",
+        "3. Experimental Setup\nTo construct a robust deep learning model for the classification of stroke types from\nCT brain scans, a staged training strategy founded on transfer learning and a ResNet-18\nbackbone was used. This architecture was chosen because it offered a balance of model\ndepth, parameter efficiency, and performance, particularly well-suited for medical imaging\ntasks where training data is limited. The ResNet-18 model was initialized with weights\npretrained on the ImageNet dataset, allo",
+        "This combination of tools ensured robustness, reproducibility,\nand efficiency across all stages of the experimentation pipeline.\n6. Results and Discussions\n6.1. AI Model Prediction Performance\nWe present and discuss the prediction performance results obtained from four\ntransformer-based and hybrid pretrained models used in this study. Each model was\ntrained on 80% of the dataset and evaluated on the remaining 20% using standard classifi-\ncation metrics, including accuracy, precision, recall, F1-",
+        "Diagnostics 2025, 15, 2486 3 of 23\nThe remainder of this research is structured as follows: Section 2 provides background\nby explaining the medical-related and AI-related terms and concepts. Section 3 summarizes\nthe relevant research literature and outlines the ML, DL, and transfer learning (TL) methods\ndeveloped for stroke detection. Section 4 describes the dataset and methodology. Section 5\nexplains the experimental design, covering the evaluation metrics, the training/testing\nprocedures, and ",
+        "Eng. Proc. 2025, 107, 123 10 of 11\nTable 4 presents a comparison of various studies conducted in different years using\ndifferent datasets to achieve the highest accuracy.\nTable 4. Accuracy of various algorithms from the literature.\nRef.",
+        "AI 2025, 6, 202 3 of 22\nThe creation of portable diagnostic technologies is an especially promising direction\nfor the augmentation of stroke detection capabilities, with utility in underserved popu-\nlations and remote clinical environments. The Strokefinder MD100, created by Medfield\nDiagnostics, is an example of a microwave-based technology used to detect intracranial\nhemorrhage with 100% sensitivity and 75% specificity within around 45 s, illustrating\nthe possibility of fast, non-invasive eval",
+        "Bell palsy (10%),\nstroke (7%), conversion disorders (6%), migraine (28%), and seizures (15%) were the most\nfrequently diagnosed conditions. For stroke, migraine, seizures, and conversion disorders,\nthe relative proportions of diseases in children and adults were considerably different [4].\nThe focus of this study is the diet that stroke patients should follow to prevent the\nnegative effects of their condition. This entailed researching the issues and creating a\ncustomized diet for each one. Dysp",
+        "Systematic evaluation of AI stroke solutions has provided comprehensive insights into\nthe current state of commercial and research-based platforms. Al-Janabi et al. [15] conducted\na systematic review of 31 studies examining AI applications for stroke detection, focusing\nprimarily on acute ischemic stroke and large vessel occlusions with platforms including\nViz.ai, RapidAI, and Brainomix®. The review demonstrated that these AI tools consistently\nachieved high levels of diagnostic accuracy, with R"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "Which model and augmentation strategy achieved the highest overall performance?",
+      "response": "The best-performing model and augmentation strategy was **MaxViT trained with cGAN-based augmentation**, achieving the highest accuracy of **98.00%** [S1][S2][S3]. This combination also produced top or near-top F1-score, recall, and precision values [S2]. Overall, MaxViT consistently outperformed all other models across training setups, and its highest accuracy came with cGAN augmentation [S1].",
+      "reference": "The MaxViT model with augmentation reached the highest performance with 98.00% accuracy and F1-score.",
+      "retrieved_contexts": [
+        "Among them, MaxViT consistently achieved the best results, while\nViT recorded the lowest across all metrics. This can be attributed to ViT relatively simple\narchitecture, which lacks the hierarchical and multi-scale attention mechanisms present in\nmore advanced models like TNT and MaxViT. These mechanisms help extract fine-grained\nfeatures critical for medical image classification. In their baseline configurations (non-\naugmented), TNT, ConvNeXt, and MaxViT achieved competitive accuracies of 93.",
+        "Diagnostics 2025, 15, 2486 16 of 23\nTable 4. Prediction performance of transformer-based and hybrid pretrained models for multiclass\nstroke classification. Models were evaluated under three training settings: original dataset, classical\naugmentation, and cGAN-based augmentation. Bold font with underline indicates the best results,\nand bold font alone shows the second-best results.\nDL Models Accuracy F1-Score Recall Precision AUC\nViT 0.8662 0.8539 0.8541 0.8539 0.9250\nViT + classical DA 0.8556 0.",
+        "When comparing\nthe best-performing versions of each architecture, ConvNeXt with cGAN achieved the\nnext highest accuracy at 97.45%, followed by TNT with cGAN at 96.00%. These findings\nhighlight the superior generalization capability of MaxViT regardless of the augmentation",
+        "Moreover, the framework’s\nadaptability and association with EHR ensure that it stays current with every patient’s\ndeveloping wellbeing profile, so helping the precision and reliability of future conjectures.\nTable 4 and Figure 7 demonstrate that the models’ performance was comparatively\npoorer before data augmentation. With an accuracy of 0.89 for the RNN model and\n0.84 for the LSTM model, both models demonstrated their capacity to identify long-term\ndependencies. While getting a significant rec",
+        "Appl. Sci. 2025, 15, 4639 17 of 28\nTable 5. Evaluation metrics of deep learning models and hybrid approach after data augmentation.\nModel Accuracy Precision Recall F1-Score\nRNN Model 0.94 0.95 0.94 0.95\nLSTM Model 0.95 0.96 0.96 0.96\nCNN Model 0.70 0.76 0.73 0.75\nProposed\nHybrid Model 0.96 0.94 0.97 0.95\nAppl. Sci. 2025, 15, x FOR PEER REVIEW 17 of 28 \n \n  \n(a) (b) \n  \n(c) (d) \nFigure 8. Post-augmentation accuracy comparison. ( a)  A c c u r a c y  o f  R N N  m o d e l ,  (b) accuracy of \nLSTM ",
+        "Accuracy comparison RNN, LSTM, CNN, and combined models. ( a) Accuracy of RNN\nmodel, (b) accuracy of LSTM model, (c) accuracy of CNN model, (d) accuracy of hybrid model.\nTable 5 demonstrate how successful the suggested hybrid technique is when compar-\ning the post-augmentation accuracy of various models. The accuracy scores of the RNN,\nLSTM, and CNN models were 0.94, 0.95, and 0.70, respectively. The precision and recall of\nthe LSTM model were marginally higher. With an accuracy of 0.96, the hyb",
+        "This combination of tools ensured robustness, reproducibility,\nand efficiency across all stages of the experimentation pipeline.\n6. Results and Discussions\n6.1. AI Model Prediction Performance\nWe present and discuss the prediction performance results obtained from four\ntransformer-based and hybrid pretrained models used in this study. Each model was\ntrained on 80% of the dataset and evaluated on the remaining 20% using standard classifi-\ncation metrics, including accuracy, precision, recall, F1-",
+        "The VGG-16’s\nfinal classification layer was modified to output six classes, and data augmentation tech-\nniques (e.g., rotations and contrast enhancement) were applied to improve robustness\nduring fine-tuning. Despite the limited training data per class, the model achieved high\nperformance—about 86.5% overall accuracy, with ~85.9% precision, ~86.2% recall, and"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "How are ischemic and hemorrhagic strokes differentiated on CT scans?",
+      "response": "Ischemic strokes appear as **hypodense (dark) regions** on CT scans, reflecting infarcted tissue from blocked blood supply [S1][S2]. Hemorrhagic strokes appear as **hyperdense (bright) regions** on CT scans due to acute bleeding forming a hematoma [S1][S2][S4]. These characteristic patterns—hypodense infarctions versus hyperdense bleedings—are the key visual markers used to differentiate the two stroke types on CT [S1].",
+      "reference": "Ischemic strokes appear as dark (hypodense) regions, while hemorrhagic strokes appear as bright (hyperdense) regions due to acute bleeding.",
+      "retrieved_contexts": [
+        "This bleeding forms a hematoma, visible on CT scans as hyperdense\n(bright) regions due to the pooling of blood. Hemorrhagic strokes are often linked to\nhypertension and can rapidly elevate intracranial pressure, causing significant damage.\n2.2. Key CT Imaging Features for Stroke Classification\nCT scans serve as the primary imaging modality in emergency stroke diagnosis due to\ntheir speed and accessibility. Distinguishing between ischemic and hemorrhagic strokes on\nCT relies on characteristic vis",
+        "Diagnostics 2025, 15, 2486 4 of 23\nTable 1. Key Difference between Hemorrhagic and Ischemic Strokes.\nFeature Hemorrhagic Stroke Ischemic Stroke\nCT Appearance Hyperdense (bright regions) Hypodense (dark regions)\nLesion Markers Blood accumulation,\nHematoma\nInfarcted tissue,\nReduced perfusion\nMidline Shift Common due to mass effect Less common,\nUnless large infarct\nPossible Locations Basal ganglia, Cerebellum,\nBrainstem Middle cerebral artery territory\nDetection Rapid onset,\nEasily detected on CT\nO",
+        "AI 2025, 6, 202 13 of 22\nstroke misclassification (1.8%) is clinically desirable, since this kind of error can result in\ninappropriate treatment. Nevertheless, 6.1% of ischemic cases were diagnosed as normal\nand therefore could potentially delay interventions that are needed.\nIn all instances, classification accuracy was optimal, as demonstrated by correct classi-\nfication of 666 of 686 cases (97.1%). Misclassification of just 3 normal cases as hemorrhagic\nstroke and 17 as ischemia was seen, cor",
+        "Diagnostics 2025, 15, 2486 3 of 23\nThe remainder of this research is structured as follows: Section 2 provides background\nby explaining the medical-related and AI-related terms and concepts. Section 3 summarizes\nthe relevant research literature and outlines the ML, DL, and transfer learning (TL) methods\ndeveloped for stroke detection. Section 4 describes the dataset and methodology. Section 5\nexplains the experimental design, covering the evaluation metrics, the training/testing\nprocedures, and ",
+        "Diagnostics 2025, 15, 2486 2 of 23\noxygen to the brain cells and tissues rupture and bleed, causing an increased pressure on\nthe surrounding tissue inside the skull, which can further lead to brain damage.\nEarly stroke detection is the first essential step in stroke management, and it is crucial\nin improving survival rates, which exceed 90% [2]. Several imaging techniques have been\nutilized for stroke detection and diagnosis. Computed tomography (CT) and magnetic\nresonance imaging (MRI) are the ",
+        "This kind of stroke is less prevalent than ischemic\nstroke, although it is generally more lethal. Hemorrhaging from the vessel exerts pressure\non cerebral tissues, compromising their functionality and resulting in substantial damage\nor necrosis of neurons. The symptoms of hemorrhagic stroke are high blood pressure,\ntrauma, brain tumor, and use of any medicine used for blood thinning, etc. There are also\ntwo types of hemorrhagic stroke, which are as follows: 1. intracerebral hemorrhagic and\n2. su",
+        "Figure 5. Confusion Matrix.\nIn cases of hemorrhagic stroke (n = 149), 136 cases (91.3%) were correctly classified,\nand 7 were misclassified as ischemia and 6 as normal. Hemorrhagic stroke-ischemia\nconfusion accounts for 4.7% of hemorrhagic stroke cases and could reflect difficult cases\nwith confounding imaging characteristics or pathologic characteristics that are atypical.\nIschemic cases (n = 163) comprised 150 correct diagnoses (92.0%), 3 misclassified as\nhemorrhagic stroke, and 10 as normal. ",
+        "Diagnostics 2025, 15, 2486 7 of 23\n~86.7% F1-score on hemorrhage classification. This demonstrates robust transfer learning\nperformance for hemorrhage detection on CT. The author noted some generalizability\nchallenges (due to scanner and protocol variability) and plans to incorporate further en-\nhancements, such as improved contrast.\nAnother recent study [ 32] evaluated pretrained CNNs (Xception, VGG16, VGG19,\nInceptionV3, InceptionResNetV2) for stroke detection in CT scans. Transfer learning\nfo"
+      ],
+      "metrics": {
+        "faithfulness": 0.4,
+        "factual_correctness": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 0.5
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    }
+  ]
+}

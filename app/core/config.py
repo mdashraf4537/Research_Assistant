@@ -45,7 +45,7 @@ class Settings(BaseSettings):
     agent_recursion_limit: int = 4
     agent_plan_max_subquestions: int = 4
     agent_plan_max_completion_tokens: int = 8192
-    evaluation_results_directory: str = "data/evaluations/results"
+    evaluation_results_directory: str = str(_PROJECT_ROOT / "data" / "evaluations" / "results")
     evaluation_throttle_seconds: float = 1.0
     deepseek_api_key: SecretStr | None = None
     deepseek_model: str = "deepseek-v4-flash"

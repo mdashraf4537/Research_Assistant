@@ -1,0 +1,425 @@
+{
+  "created_at": "2026-09-07T23:40:22.087069+00:00",
+  "dataset_size": 15,
+  "averages": {
+    "faithfulness": 0.0778,
+    "factual_correctness": 0.3007,
+    "context_precision": 0.2,
+    "context_recall": 0.1111
+  },
+  "targets": {
+    "faithfulness": 0.85,
+    "factual_correctness": 0.8,
+    "context_precision": 0.75,
+    "context_recall": 0.8
+  },
+  "passed": false,
+  "cases": [
+    {
+      "user_input": "What is the title of the research paper and who are the primary authors?",
+      "response": "Based on the supplied evidence, the research paper is titled **\"Predicting Brain Stroke Risk Using Machine Learning: A Comprehensive Approach to Early Detection and Prevention\"** [S1]. The primary authors are **Isha Noor, Amara Aslam, Azka Mir, and Gina Purnama Insany** [S1].",
+      "reference": "The title of the research paper is \"An Explainable AI Framework for Stroke Classification Based on CT Brain Images\" and the primary authors are Serra Aksoy, Pinar Demircioglu, and Ismail Bogrekci.",
+      "retrieved_contexts": [
+        "Academic Editors: Debopriyo Roy,\nGeorge F. Fragulis and Peter Ilic\nPublished: 9 October 2025\nCitation: Noor, I.; Aslam, A.; Mir, A.;\nInsany, G.P . Predicting Brain Stroke\nRisk Using Machine Learning: A\nComprehensive Approach to Early\nDetection and Prevention. Eng. Proc.\n2025, 107, 123. https://doi.org/\n10.3390/engproc2025107123\nCopyright: © 2025 by the authors.\nLicensee MDPI, Basel, Switzerland.\nThis article is an open access article\ndistributed under the terms and\nconditions of the Creative Com",
+        "Gulzar, S.; Kiani, B.H.; Akram, R.W.; Hussein, A.M.; Alamri, A. Gender-Based Differences in Stroke Types and Risk Factors\nAmong Young Adults: A Comparative Retrospective Analysis. J. Clin. Med. 2025, 14, 663. [CrossRef]\nDisclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual\nauthor(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to\npeople or propert",
+        "Diagnostics 2025, 15, 2486 21 of 23\nOverall, this study offers valuable contributions toward improving stroke manage-\nment, improving long-term health conditions, reducing mortality rates, and supporting\nhealthcare professionals in clinical decision-making.\nAuthor Contributions: Conceptualization, M.A.T. and S.Q.; methodology, M.A.T. and S.Q.; software,\nS.Q.; validation, M.A.T. and S.Q.; formal analysis, S.Q.; writing—original draft preparation, S.Q.;\nwriting—review and editing, S.Q. and M.A.T.;",
+        "P .D. and I.B. contributed to su-\npervision and funding acquisition. All authors have read and agreed to the published version of\nthe manuscript.\nFunding: This study was funded by the Scientific Research Projects of Aydın Adnan Menderes\nUniversity (MF-24003).\nData Availability Statement: All the datasets used in experimentation are available online on\nthe internet.\nConflicts of Interest: Authors declare that they have no known competing financial interests or\npersonal relationships that could ha",
+        "Eng. Proc. 2025, 107, 123 11 of 11\nReferences\n1. Chawla, M.; Sharma, S.; Sivaswamy, J.; Kishore, L.T. A method for automatic detection and classification of stroke from brain CT\nimages. In Proceedings of the 2009 Annual International Conference of the IEEE Engineering in Medicine and Biology society,\nMinneapolis, MN, USA, 3–6 September 2009; pp. 3581–3584. [CrossRef]\n2. Small, S.L.; Buccino, G.; Solodkin, A. Brain Repair after Stroke—A Novel Neurological Model. Nat. Rev. Neurol. 2013, 9, 698–707",
+        "Appl. Sci. 2025, 15, 4639 5 of 28\nTable 1. Cont.\nTitle of Paper Objective Methodology Result/Limitations\n5.\n“Brain Stroke Detection\nUsing Convolutional\nNeural Network and\nDeep Learning\nModels” [5]\n• To build and optimize\na CNN for accurate\nbrain stroke detection\nusing medical\nimaging data.\nThe methodology uses deep\nlearning, particularly CNN, to\nextract features and classify\nstroke occurrences from medical\nimaging data with high\nprecision.\nThe study achieved 96–97%\naccuracy in stroke classificat",
+        "The subsequent\nAppl. Sci. 2025, 15, 4639 https://doi.org/10.3390/app15094639",
+        "Conflicts of Interest: The authors declare no conflicts of interest. The funders had no role in the design\nof the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript, or\nin the decision to publish the results.\nAbbreviations\nThe following abbreviations are used in this manuscript:\nCT Computed tomography\nMRI Magnetic resonance imaging\nAI Artificial intelligence\nXAI Explainable AI\nML Machine learning\nDL Deep learning\nTL Transfer learning\nSVM Support vecto"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What was the overall test accuracy achieved by the ResNet-18 model in this study?",
+      "response": "The ResNet-18 model achieved an overall test accuracy of 95% on the independent test set [S1].",
+      "reference": "The model performed with 95% test accuracy with good performance across all classes.",
+      "retrieved_contexts": [
+        "AI 2025, 6, 202 11 of 22\nthese phases is a hallmark of successful learning without deep overfitting. The relatively\nsmall gap between training and validation accuracy is a sign of the great generalization\nability of the trained model. This implies that the model not only learned from the new data\nbut also managed to preserve its capability to generalize well with new unseen examples.\n \n \n \n \n \n \n \n \n \n \n \nFigure 3. Training and Validation Accuracy Curves.\n4.2. Test Set Performance\nFollowing the ",
+        "The XRAI deployment was paired with the fine-tuned ResNet-18 model with the\nsaliency library. An explainability pipeline was created to pass CT brain images through the\nsame preprocessing transformations as during training, such as resizing to224 × 224 pixels,\nconverting to RGB from grayscale, and normalizing. The model’s prediction for each input\nimage was retrieved, and XRAI attribution maps were created by calculating input–output\ngradients for the predicted class. The attribution scores were",
+        "Appl. Sci. 2025, 15, 4639 16 of 28\nTable 4. Evaluation metrics of deep learning models and hybrid approach.\nModel Accuracy Precision Recall F1-Score\nRNN Model 0.89 0.90 0.91 0.90\nLSTM Model 0.84 0.89 0.90 0.90\nCNN Model 0.70 0.74 0.91 0.83\nProposed\nHybrid Model 0.92 0.90 0.91 0.90\nAppl. Sci. 2025, 15, x FOR PEER REVIEW 16 of 28 \n \n  \n(a) (b) \n  \n(c) (d) \nFigure 7. Accuracy comparison RNN, LSTM, CNN, and combined models. ( a) Accuracy of RNN \nmodel, (b) accuracy of LSTM model, (c) accuracy of CNN",
+        "Appl. Sci. 2025, 15, 4639 17 of 28\nTable 5. Evaluation metrics of deep learning models and hybrid approach after data augmentation.\nModel Accuracy Precision Recall F1-Score\nRNN Model 0.94 0.95 0.94 0.95\nLSTM Model 0.95 0.96 0.96 0.96\nCNN Model 0.70 0.76 0.73 0.75\nProposed\nHybrid Model 0.96 0.94 0.97 0.95\nAppl. Sci. 2025, 15, x FOR PEER REVIEW 17 of 28 \n \n  \n(a) (b) \n  \n(c) (d) \nFigure 8. Post-augmentation accuracy comparison. ( a)  A c c u r a c y  o f  R N N  m o d e l ,  (b) accuracy of \nLSTM ",
+        "The VGG-16’s\nfinal classification layer was modified to output six classes, and data augmentation tech-\nniques (e.g., rotations and contrast enhancement) were applied to improve robustness\nduring fine-tuning. Despite the limited training data per class, the model achieved high\nperformance—about 86.5% overall accuracy, with ~85.9% precision, ~86.2% recall, and",
+        "TP and\nTN are correctly predicted, while FP and FN are incorrectly predicted. The formula for\naccuracy is as follows:\nAccuracy = TP + TN\nTP + TN + FP + FN (1)\nPrecision: This metric indicates how many predicted positive values are positive. The\nformula for precision is as follows:\nPrecision = TP\nTP + FP (2)\nRecall: Recall measures how well the model identifies true positive instances (e.g., detecting\nall actual stroke cases). The formula for recall is as follows:\nRecall = TP\nTP + FN (3)\nF1 Score",
+        "Eng. Proc. 2025, 107, 123 9 of 11\nFigure 2. Results of classifiers.\n4.1. Accuracy\nAccuracy is the percentage of accurately predicted cases to all the cases. That performance\nmeasure is the most often utilized one. With an accuracy of 95.05%, for example, the Random\nForest model produced 95.05% of all the right predictions out of all the ones generated.\n4.2. Precision\nPrecision, then, is the percentage of accurate positive forecasts. When false positives are\nexpensive, this is a vital statistic. ",
+        "Accuracy comparison RNN, LSTM, CNN, and combined models. ( a) Accuracy of RNN\nmodel, (b) accuracy of LSTM model, (c) accuracy of CNN model, (d) accuracy of hybrid model.\nTable 5 demonstrate how successful the suggested hybrid technique is when compar-\ning the post-augmentation accuracy of various models. The accuracy scores of the RNN,\nLSTM, and CNN models were 0.94, 0.95, and 0.70, respectively. The precision and recall of\nthe LSTM model were marginally higher. With an accuracy of 0.96, the hyb"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "How many CT brain scans were used for training the ResNet-18 model and what were the three diagnostic categories?",
+      "response": "The ResNet-18 model was trained on **6,653 CT brain scans** [S1]. The three diagnostic categories were **hemorrhagic stroke, ischemia, and normal** [S1]. Relatedly, the model’s output layer was designed for the categories **bleeding, ischemia, and normal** [S2].",
+      "reference": "A ResNet-18 model was trained on 6653 CT brain scans labeled with three diagnostic categories: hemorrhagic stroke, ischemia, and normal.",
+      "retrieved_contexts": [
+        "In this paper, a ResNet-18 model was trained on 6653 CT brain scans (hemor-\nrhagic stroke, ischemia, normal) with two-phase fine-tuning and transfer learning, XRAI\nexplainability analysis, and web-based clinical decision support system integration. The\nmodel performed with 95% test accuracy with good performance across all classes. This\nsystem has great potential for emergency rooms and resource-poor environments, offering\nquick stroke evaluation when specialists are not available, particularly ",
+        "3. Experimental Setup\nTo construct a robust deep learning model for the classification of stroke types from\nCT brain scans, a staged training strategy founded on transfer learning and a ResNet-18\nbackbone was used. This architecture was chosen because it offered a balance of model\ndepth, parameter efficiency, and performance, particularly well-suited for medical imaging\ntasks where training data is limited. The ResNet-18 model was initialized with weights\npretrained on the ImageNet dataset, allo",
+        "Diagnostics 2025, 15, 2486 9 of 23\nTable 2. Dataset statistics used in this study for brain stroke CT-scan images.\nDataset Name Type Number of CT Scans\nCT-scan Images from\nRepublic of Turkey’s\nMinistry of Health’s [28].\nIschemic Stroke 1130\nHemorrhagic Stroke 1093\nNormal (No Stroke) 4427\nAll classes (Total images) 6650\n4.3. Data Preprocessing\nThis study utilizes CT-scan images for training three state-of-the-art DL pretrained\nmodels: TNT, MaxViT, and ConvNext. To ensure compatibility and optimal",
+        "Diagnostics 2025, 15, 2486 8 of 23\nFigure 1. Overview of the proposed stroke classification pipeline. CT images are preprocessed and\npassed through transformer-based models (ConvNeXt, TNT, MaxViT) to extract features. Predictions\nare made via a fully connected layer, and interpretability is enhanced using Grad-CAM++ for\nclinical explanation.\n4.2. Datasets\nThe CTscan images dataset utilized in this study are obtained from the dataset pub-\nlished in a recent study for brain stroke detection [28]. ",
+        "Diagnostics 2025, 15, 2486 12 of 23\n2. Built-in segmentation capability eliminating the need for external segmentation mod-\nels like UNet. MaxViT inherently segments feature during classification.\n4.6. Transfer Learning, Fine-Tuning, and Classification\nTo leverage existing knowledge embedded in large-scale pretrained models, we\nadopted a transfer learning approach tailored for stroke classification using brain CT\nscans. As outlined in Section 4.5, the selected models: MaxViT, ConvNeXt, and TNT\nw",
+        "The XRAI deployment was paired with the fine-tuned ResNet-18 model with the\nsaliency library. An explainability pipeline was created to pass CT brain images through the\nsame preprocessing transformations as during training, such as resizing to224 × 224 pixels,\nconverting to RGB from grayscale, and normalizing. The model’s prediction for each input\nimage was retrieved, and XRAI attribution maps were created by calculating input–output\ngradients for the predicted class. The attribution scores were",
+        "Diagnostics 2025, 15, 2486 10 of 23\n4.5. Pretrained Model Selection and Feature Extraction\nTo classify stroke types from brain CT scans, we employed state-of-the-art pretrained\nmodels that efficiently extract discriminative features. These models were originally trained\non large-scale datasets such as ImageNet [ 35], have demonstrated an outstanding capa-\nbility in capturing low-level patterns (e.g., edges and textures) and high-level semantic\nrepresentations (e.g., global context). We adapted t",
+        "In each sub-network, we added batch normalization, ReLU activation, and dropout lay-\ners to learn brain stroke data characteristics with a 256 × 256 CT scan image size. All\nsub-networks used hyperparameter settings during training: a batch size of 16, Adam\noptimizer with learning rate 1× 10−4, and 40 epochs. We set this to a loss function as\n“CrossEntropyLoss” indicator. In the ensemble learning stage, we used soft voting to fuse\npredictions from all sub-models. For each sub-model Mi, the predic"
+      ],
+      "metrics": {
+        "faithfulness": 0.6666666666666666,
+        "factual_correctness": 0.67,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What was the distribution of images among the three diagnostic categories in the full dataset?",
+      "response": "In the full dataset described in [S1], the distribution was:\n\n- Normal: 4428 images  \n- Ischemic stroke: 1131 images  \n- Hemorrhagic stroke: 1094 images  \n- Total: 6653 images [S1]\n\nNote that other reported numbers refer to a slightly smaller post-cleaning/subset count: 4427 normal, 1130 ischemic, and 1093 hemorrhagic, totaling 6650 images [S2][S3].",
+      "reference": "Among the 6653 images, 4428 are labeled as normal, 1131 as ischemic stroke, and 1094 as hemorrhagic stroke.",
+      "retrieved_contexts": [
+        "Each CT scan slice in the dataset is labeled with one of three diagnostic categories:\nnormal (indicating no evidence of stroke), ischemic stroke, or hemorrhagic stroke due\nto intracranial bleeding. Among the 6653 images, 4428 are labeled as normal, 1131 as\nischemic stroke, and 1094 as hemorrhagic stroke (Figure 1). This relatively imbalanced\ndistribution, especially the predominance of normal scans, reflects the clinical reality in\nemergency radiology where non-stroke cases are common among indi",
+        "AI 2025, 6, 202 8 of 22\nnormalization step maps pixel values to a standardized range of roughly −1 to 1, which is\nadvantageous for training stability.\nAfter the images had been preprocessed, the dataset was divided into training, val-\nidation, and testing subsets. The division was performed based on a stratified random\nsampling approach to maintain the original class distribution in each subset, a necessary\nstep to avoid model bias. Seventy percent of the images were allocated to the training\nse",
+        "Diagnostics 2025, 15, 2486 9 of 23\nTable 2. Dataset statistics used in this study for brain stroke CT-scan images.\nDataset Name Type Number of CT Scans\nCT-scan Images from\nRepublic of Turkey’s\nMinistry of Health’s [28].\nIschemic Stroke 1130\nHemorrhagic Stroke 1093\nNormal (No Stroke) 4427\nAll classes (Total images) 6650\n4.3. Data Preprocessing\nThis study utilizes CT-scan images for training three state-of-the-art DL pretrained\nmodels: TNT, MaxViT, and ConvNext. To ensure compatibility and optimal",
+        "Diagnostics 2025, 15, 2486 8 of 23\nFigure 1. Overview of the proposed stroke classification pipeline. CT images are preprocessed and\npassed through transformer-based models (ConvNeXt, TNT, MaxViT) to extract features. Predictions\nare made via a fully connected layer, and interpretability is enhanced using Grad-CAM++ for\nclinical explanation.\n4.2. Datasets\nThe CTscan images dataset utilized in this study are obtained from the dataset pub-\nlished in a recent study for brain stroke detection [28]. ",
+        "3. Experimental Setup\nTo construct a robust deep learning model for the classification of stroke types from\nCT brain scans, a staged training strategy founded on transfer learning and a ResNet-18\nbackbone was used. This architecture was chosen because it offered a balance of model\ndepth, parameter efficiency, and performance, particularly well-suited for medical imaging\ntasks where training data is limited. The ResNet-18 model was initialized with weights\npretrained on the ImageNet dataset, allo",
+        "AI 2025, 6, 202 17 of 22\nThe second normal example is an inferior axial slice. The XRAI heatmap illustrates\nquite an even distribution of attribution across the brain tissue with modestly elevated\nactivation in more central structures. The diffuse character of these attributions, in contrast\nto the localized concentration in stroke cases, is reflective of correct model behavior in the\nclassification of normal tissue. The third normal example is another symmetrical axial\nplane where XRAI attribut",
+        "Diagnostics 2025, 15, 2486 19 of 23\narea, the more the model relies on that area in making its final decision. In contrast,\nthe blue areas indicate little to no contribution.\n• Shape and Localization: Heatmaps with focused dark red regions suggest confident\nand localized attention, likely corresponding to stroke-affected areas.\n• Visual Alignment with Lesions: Although no separate segmentation mask technique\nwas used, visual inspection indicates that the darkest red areas in the heatmaps often\na",
+        "Classification accuracy using StyleGAN2, StyleGAN3, and conditional StyleGAN3.\n4.4. Comparison for FID Results\nWe selected FID to measure image generation quality using Equation (18).\nFID =∥ µr− µg∥2 + Tr\n\u0010\nΣr + Σg− 2\n\u0000\nΣrΣg\n\u00011/2\u0011\n(18)\nwhere∥·∥ represents the Euclidean norm, Tr() denotes the matrix trace (sum of diagonal\nelements), and\n\u0000\nΣrΣg\n\u00011/2 represents the matrix square root of ΣrΣg. µr and µg represent the\naverage vectors of real and generated images, respectively.Σr and Σg are the corres"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What were the precision, recall, and F1-score for hemorrhagic stroke cases in the test set?",
+      "response": "Based on the supplied evidence, for hemorrhagic stroke cases in the test set, the model had a precision of 0.96, recall of 0.91, and F1-score of 0.93 [S1].",
+      "reference": "For the hemorrhagic stroke cases, the model had a precision of 0.96, recall of 0.91, and F1-score of 0.93.",
+      "retrieved_contexts": [
+        "AI 2025, 6, 202 12 of 22\nFor the hemorrhagic stroke cases, which are the hemorrhagic stroke cases, the model\nhad a precision of 0.96, recall of 0.91, and F1-score of 0.93. This means when the model\npredicted hemorrhagic stroke, it was right 96% of the time and identified 91% of all the\ntrue hemorrhagic stroke cases in the test set correctly. The high accuracy also suggests a\nlow rate of false positive predictions for hemorrhagic stroke, which is clinically important\nbecause misclassifying normal",
+        "AI 2025, 6, 202 10 of 22\n(hemorrhagic stroke and ischemia), thus pushing the model to have balanced performance\nin all classes and avoid bias in the learned decision boundaries.\nDuring both phases of training, the performance of the model was constantly checked\nwith a validation set from the same distribution as the training set. Both accuracy and\nloss measures were noted at each epoch to assess training development. At the last epoch\nof fine-tuning, the model had a validation accuracy of 96% an",
+        "TP and\nTN are correctly predicted, while FP and FN are incorrectly predicted. The formula for\naccuracy is as follows:\nAccuracy = TP + TN\nTP + TN + FP + FN (1)\nPrecision: This metric indicates how many predicted positive values are positive. The\nformula for precision is as follows:\nPrecision = TP\nTP + FP (2)\nRecall: Recall measures how well the model identifies true positive instances (e.g., detecting\nall actual stroke cases). The formula for recall is as follows:\nRecall = TP\nTP + FN (3)\nF1 Score",
+        "Diagnostics 2025, 15, 2486 3 of 23\nThe remainder of this research is structured as follows: Section 2 provides background\nby explaining the medical-related and AI-related terms and concepts. Section 3 summarizes\nthe relevant research literature and outlines the ML, DL, and transfer learning (TL) methods\ndeveloped for stroke detection. Section 4 describes the dataset and methodology. Section 5\nexplains the experimental design, covering the evaluation metrics, the training/testing\nprocedures, and ",
+        "Diagnostics 2025, 15, 2486 20 of 23\nization performance, especially for hemorrhagic cases where visual contrast is more\nprominent.\n• Dice Coefficient quantifies the spatial overlap between the binary version of the\nGrad-CAM++ map and the ground truth mask. Although our Dice scores were\nmodest (0.0869 for ischemia and 0.0420 for hemorrhage), this is consistent with the\nnature of Grad-CAM++—which is optimized for highlighting key discriminative\nregions, not full lesion segmentation. As such, a low",
+        "Appl. Sci. 2025, 15, 4639 15 of 28\nare similar in parallel order), F1-score, and AUC bend [ 81]. Coming up next are the\nmeanings of the measurable boundaries.\nAccuracy = TP + TN\nTP + FP + FN + TN (1)\nPrecision = TP\nTP + FN (2)\nRecall /Sensitivity = TP\nTP + FN (3)\nF1 Score = 2 ∗ (Recall ∗ Precision )\n(Recall + precision ) (4)\nwhere,\nTP = true positive,\nFN = false negative,\nFP = false positive,\nTN = true negative.\n7. Result\nThe brain stroke expectation framework separates individuals into okay, me",
+        "Diagnostics 2025, 15, 2486 4 of 23\nTable 1. Key Difference between Hemorrhagic and Ischemic Strokes.\nFeature Hemorrhagic Stroke Ischemic Stroke\nCT Appearance Hyperdense (bright regions) Hypodense (dark regions)\nLesion Markers Blood accumulation,\nHematoma\nInfarcted tissue,\nReduced perfusion\nMidline Shift Common due to mass effect Less common,\nUnless large infarct\nPossible Locations Basal ganglia, Cerebellum,\nBrainstem Middle cerebral artery territory\nDetection Rapid onset,\nEasily detected on CT\nO",
+        "2.\n“A Novel Machine\nLearning based Stroke\nPrediction System\nusing Magnetic\nResonance Imaging\nand Adaptive New\nFuzzy Inference\nSystem” [2]\n• To manage data\nuncertainty and raise\nprediction accuracy,\nuse an adaptive new\nfuzzy inference\nsystem (ANFIS).\nITo deal with uncertainty and\nenhance stroke prediction\naccuracy, the strategy employs\nMRI data preprocessing and\nANFIS, which has been\nevaluated against other\napproaches on a different\ndataset.\nThe paper introduces an\nANFIS-based stroke prediction\nm"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 0.6666666666666666
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What is the overall accuracy achieved by the developed hybrid model in identifying stroke risk?",
+      "response": "The evidence is conflicting. The introduction/abstract states the hybrid model reached an overall accuracy of **96%** in identifying stroke risk as low, medium, or high [S1], and the post-augmentation evaluation table also reports a proposed hybrid model accuracy of **0.96** [S4][S5]. However, other sections state the hybrid model’s accuracy is **92%** [S2][S3]. Thus, the reported overall accuracy is inconsistent across the supplied document.",
+      "reference": "By merging these models, we reached an overall accuracy of 96% in identifying stroke risk as low, medium, or high.",
+      "retrieved_contexts": [
+        "The current study compared\nthe performance of these individual models with the developed hybrid model on the\nbrain stroke dataset. By merging these models, we reached an overall accuracy of 96% in\nidentifying stroke risk as low, medium, or high. This categorization may offer healthcare\npractitioners actionable insights by assisting them and allowing them to make better\ndecisions. This technique represents a substantial improvement in stroke prediction and\npreventive healthcare practices. The mod",
+        "Appl. Sci. 2025, 15, 4639 22 of 28\naccurately assess and identify risk levels demonstrates its potential to increase diagnostic\nprecision and allow for prompt actions. Deep learning models are more resilient in handling\ncomplicated correlations between input variables, giving them an edge over classic stroke\nprediction algorithms.\nThe combination (hybrid) model has an accuracy of 92%, with 90% precision, 91%\nrecall, and a 90% F1-score. This high degree of performance demonstrates the hybrid ap-\n",
+        "The curves’ proximity to the top-left corner and high AUC \nvalues suggest good model performance and discriminatory abilities across all classes. \n \nFigure 9. ROC curve for hybrid model with AUC scores. \nThe hybrid model’s results demonstrate outs tanding accuracy in predicting stroke \nrisk levels, at 92%. The model has well-balanced accuracy, recall, and F1-scores, surpas-\nsing individual RNN, LSTM, and CNN models. The ROC curve demonstrates the hybrid \nmodel’s capacity to accurately distinguis",
+        "Appl. Sci. 2025, 15, 4639 17 of 28\nTable 5. Evaluation metrics of deep learning models and hybrid approach after data augmentation.\nModel Accuracy Precision Recall F1-Score\nRNN Model 0.94 0.95 0.94 0.95\nLSTM Model 0.95 0.96 0.96 0.96\nCNN Model 0.70 0.76 0.73 0.75\nProposed\nHybrid Model 0.96 0.94 0.97 0.95\nAppl. Sci. 2025, 15, x FOR PEER REVIEW 17 of 28 \n \n  \n(a) (b) \n  \n(c) (d) \nFigure 8. Post-augmentation accuracy comparison. ( a)  A c c u r a c y  o f  R N N  m o d e l ,  (b) accuracy of \nLSTM ",
+        "Accuracy comparison RNN, LSTM, CNN, and combined models. ( a) Accuracy of RNN\nmodel, (b) accuracy of LSTM model, (c) accuracy of CNN model, (d) accuracy of hybrid model.\nTable 5 demonstrate how successful the suggested hybrid technique is when compar-\ning the post-augmentation accuracy of various models. The accuracy scores of the RNN,\nLSTM, and CNN models were 0.94, 0.95, and 0.70, respectively. The precision and recall of\nthe LSTM model were marginally higher. With an accuracy of 0.96, the hyb",
+        "These outcomes demonstrate the modelʹs capacity to evaluate sev-\neral factors and accurately forecast the risk of stroke from patient data. \nTable 6. Predicted Stroke Risk Levels Based on Health Parameters. \nParameter Case 1 Case 2 Case 3 \nGender  Male Male Male \nAge 35 56 59 \nHypertension No Yes Yes \nHeart disease No No Yes \nEver married Yes Yes Yes \nWork type Private Private Private \nResidence type Urban Urban Urban \nAverage glucose level 98 100 189.9 \nFigure 8. Post-augmentation accuracy comp",
+        "Appl. Sci. 2025, 15, 4639 6 of 28\ncharacteristics and categorize stroke events. The study found that LeNet achieved 96–97%\naccuracy for classification and 85–87% accuracy for segmentation; however, segmentation\naccuracy and high computational demand prevented real-time clinical applications.\nChen et al. [6] suggested a hybrid deep transfer learning system for improving stroke\nrisk prediction. Their process includes fine-tuning a pre-trained model utilizing a hybrid\napproach while adhering to eth",
+        "This might be caused by excessive model com-\nplexity, inadequate training samples, or noise in the dataset. Overfitting produces incorrect\npredictions in clinical contexts, limiting the model’s utility. Regularization techniques like\ndropout, weight decay, and data augmentation can assist in minimizing overfitting, but\nthey need precise parameter tweaking. Furthermore, cross-validation procedures must be\nused to confirm that the model generalizes effectively across diverse patient groups.\nAddres"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What are the two primary types of strokes mentioned in the paper?",
+      "response": "The two primary types of strokes mentioned in the paper are ischemic stroke and hemorrhagic stroke [S1].",
+      "reference": "There are two essential kinds of strokes: ischemic and hemorrhagic strokes [1].",
+      "retrieved_contexts": [
+        "Eng. Proc. 2025, 107, 123 2 of 11\nhypoglycemia (high glucose level), and hypoglycemia (low glucose level) are the biggest\nrisk factors for brain stroke. Knowing these risk factors on time and receiving better\ntreatment can prevent the occurrence of this medical condition. Brain stroke is also called\ncerebrovascular accident, cerebrovascular insult, or brain attack. The acronym used to\nremember the symptoms of stroke is FAST. F stands for the drooping of the face. A stand for\ndrifting of arms. S ",
+        "This bleeding forms a hematoma, visible on CT scans as hyperdense\n(bright) regions due to the pooling of blood. Hemorrhagic strokes are often linked to\nhypertension and can rapidly elevate intracranial pressure, causing significant damage.\n2.2. Key CT Imaging Features for Stroke Classification\nCT scans serve as the primary imaging modality in emergency stroke diagnosis due to\ntheir speed and accessibility. Distinguishing between ischemic and hemorrhagic strokes on\nCT relies on characteristic vis",
+        "AI 2025, 6, 202 13 of 22\nstroke misclassification (1.8%) is clinically desirable, since this kind of error can result in\ninappropriate treatment. Nevertheless, 6.1% of ischemic cases were diagnosed as normal\nand therefore could potentially delay interventions that are needed.\nIn all instances, classification accuracy was optimal, as demonstrated by correct classi-\nfication of 666 of 686 cases (97.1%). Misclassification of just 3 normal cases as hemorrhagic\nstroke and 17 as ischemia was seen, cor",
+        "Diagnostics 2025, 15, 2486 4 of 23\nTable 1. Key Difference between Hemorrhagic and Ischemic Strokes.\nFeature Hemorrhagic Stroke Ischemic Stroke\nCT Appearance Hyperdense (bright regions) Hypodense (dark regions)\nLesion Markers Blood accumulation,\nHematoma\nInfarcted tissue,\nReduced perfusion\nMidline Shift Common due to mass effect Less common,\nUnless large infarct\nPossible Locations Basal ganglia, Cerebellum,\nBrainstem Middle cerebral artery territory\nDetection Rapid onset,\nEasily detected on CT\nO",
+        "Their findings indicated\nthat support vector machine (SVM) was the most effective classifier in ten studies, with\nSVM and Random Forest consistently delivering strong results across all categories.\nAnother notable study [16] presented a new approach to the classification of stroke\nsubtypes, specifically hemorrhagic and ischemic strokes, using SVM, Multi-Layer Percep-\ntron (MLP), Minimal Learning Machine (MLM), Linear Discriminant Analysis (LDA), and\nStructural Co- Occurrence Matrix (SCM). SCM is",
+        "Gulzar, S.; Kiani, B.H.; Akram, R.W.; Hussein, A.M.; Alamri, A. Gender-Based Differences in Stroke Types and Risk Factors\nAmong Young Adults: A Comparative Retrospective Analysis. J. Clin. Med. 2025, 14, 663. [CrossRef]\nDisclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual\nauthor(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to\npeople or propert",
+        "Eng. Proc. 2025, 107, 123 11 of 11\nReferences\n1. Chawla, M.; Sharma, S.; Sivaswamy, J.; Kishore, L.T. A method for automatic detection and classification of stroke from brain CT\nimages. In Proceedings of the 2009 Annual International Conference of the IEEE Engineering in Medicine and Biology society,\nMinneapolis, MN, USA, 3–6 September 2009; pp. 3581–3584. [CrossRef]\n2. Small, S.L.; Buccino, G.; Solodkin, A. Brain Repair after Stroke—A Novel Neurological Model. Nat. Rev. Neurol. 2013, 9, 698–707",
+        "Table 1 provides a summary of various other literature carried out\nin the field of ML and DL applications to brain stroke detection and prediction, highlighting\nthe outcomes from each work.\n4. Detailed Overview of the Brain Stroke Detection and\nPrediction System\nAs far as clinical determination, the ability to appropriately figure a patient’s risk of\nhaving a stroke in light of existing clinical and segment information is very valuable [10].\nMost existing stroke risk evaluation approaches utiliz"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What percentage of all strokes worldwide are ischemic strokes?",
+      "response": "Ischemic strokes account for greater than 80% of all strokes, according to the evidence [S1].",
+      "reference": "Ischemic strokes, which make up almost 87% of all strokes worldwide, happen when a blood coagulation or blockage keeps blood from arriving at the mind, denying it of oxygen and nutrients [1].",
+      "retrieved_contexts": [
+        "Eng. Proc. 2025, 107, 123 2 of 11\nhypoglycemia (high glucose level), and hypoglycemia (low glucose level) are the biggest\nrisk factors for brain stroke. Knowing these risk factors on time and receiving better\ntreatment can prevent the occurrence of this medical condition. Brain stroke is also called\ncerebrovascular accident, cerebrovascular insult, or brain attack. The acronym used to\nremember the symptoms of stroke is FAST. F stands for the drooping of the face. A stand for\ndrifting of arms. S ",
+        "Figure 5. Confusion Matrix.\nIn cases of hemorrhagic stroke (n = 149), 136 cases (91.3%) were correctly classified,\nand 7 were misclassified as ischemia and 6 as normal. Hemorrhagic stroke-ischemia\nconfusion accounts for 4.7% of hemorrhagic stroke cases and could reflect difficult cases\nwith confounding imaging characteristics or pathologic characteristics that are atypical.\nIschemic cases (n = 163) comprised 150 correct diagnoses (92.0%), 3 misclassified as\nhemorrhagic stroke, and 10 as normal. ",
+        "AI 2025, 6, 202 13 of 22\nstroke misclassification (1.8%) is clinically desirable, since this kind of error can result in\ninappropriate treatment. Nevertheless, 6.1% of ischemic cases were diagnosed as normal\nand therefore could potentially delay interventions that are needed.\nIn all instances, classification accuracy was optimal, as demonstrated by correct classi-\nfication of 666 of 686 cases (97.1%). Misclassification of just 3 normal cases as hemorrhagic\nstroke and 17 as ischemia was seen, cor",
+        "Eng. Proc. 2025, 107, 123 5 of 11\nto other machine learning techniques. Therefore, both patients and medical professionals\ncan help treat a viable stroke [11].\nIn this study, stroke prediction is performed using machine learning techniques such\nas AdaBoost, AdaBoost with stochastic gradient decent (SGD), Random Forest, linear SVM,\nPoly SVM, RBG SVM, Logistic Regression, Gaussian Naïve Bayes, and Decision Tree. The\nRandom Forest classifier was determined to be the most effective of these algorith",
+        "Diagnostics 2025, 15, 2486 4 of 23\nTable 1. Key Difference between Hemorrhagic and Ischemic Strokes.\nFeature Hemorrhagic Stroke Ischemic Stroke\nCT Appearance Hyperdense (bright regions) Hypodense (dark regions)\nLesion Markers Blood accumulation,\nHematoma\nInfarcted tissue,\nReduced perfusion\nMidline Shift Common due to mass effect Less common,\nUnless large infarct\nPossible Locations Basal ganglia, Cerebellum,\nBrainstem Middle cerebral artery territory\nDetection Rapid onset,\nEasily detected on CT\nO",
+        "; Petzsche, M.H.; Baazaoui, H.; Yang, K.; Musio, F.A.; Huang, H.; Robben, D.; Seia, J.O.;\net al. ISLES’24—A Real-World Longitudinal Multimodal Stroke Dataset. arXiv 2024, arXiv:2408.11142.\n15. Al-Janabi, O.M.; El Refaei, A.; Elgazzar, T.; Mahmood, Y.M.; Bakir, D.; Gajjar, A.; Alateya, A.; Jha, S.K.; Ghozy, S.; Kallmes, D.F.;\net al. Current Stroke Solutions Using Artificial Intelligence: A Review of the Literature. Brain Sci. 2024, 14, 1182. [CrossRef]\n[PubMed]\n16. Heo, J.; Ryu, W.-S.; Chung, J.-",
+        "AI 2025, 6, 202 5 of 22\ndemonstrated that the software achieved a sensitivity of 69% for detecting isolated MCA-\nM2 occlusions, which are traditionally challenging even for experienced clinicians, and\nshowed exceptional performance within the endovascular therapy time window with 89%\nsensitivity and 96.5% specificity for patients imaged within 24 h of symptom onset.\nComprehensive reviews of AI applications in stroke care have highlighted the expo-\nnential growth and diversification of research i",
+        "Appl. Sci. 2025, 15, 4639 26 of 28\n54. Khosla, A.; Cao, Y.; Lin, C.C.Y.; Chiu, H.K.; Hu, J.; Lee, H. An integrated machine learning approach to stroke prediction. In\nProceedings of the 16th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, Washington, DC,\nUSA, 25–28 July 2010; pp. 183–192.\n55. Hung, C.Y.; Lin, C.H.; Lan, T.H.; Peng, G.S.; Lee, C.C. Development of an intelligent decision support system for ischemic stroke\nrisk assessment in a population-based electronic "
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.5,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What specific terms were used in the search strategy for the paper's review methodology?",
+      "response": "The specific terms used in the search strategy were “brain stroke”, “deep learning”, “stroke prediction”, “artificial intelligence”, and “machine learning” [S1] [S2].",
+      "reference": "The search used specific terms like \"brain stroke\", \"deep learning\", \"stroke prediction\", \"artificial intelligence\", and \"machine learning\".",
+      "retrieved_contexts": [
+        "Appl. Sci. 2025, 15, 4639 3 of 28\nchosen and preprocessed. In order to improve prediction performance, the suggested\nmethodology presents a hybrid deep learning model that combines together the advan-\ntages of CNN, recurrent neural networks (RNNs) and long short-term memory (LSTM),\nalgorithms [6]. The proposed system’s features and utility highlight how useful it is in\nclinical settings and provide information on risk assessment and early identification. The\nefficacy of the system is demonstrate",
+        "Sci. 2025, 15, x FOR PEER REVIEW 3 of 28 \n \ntem’s architecture emphasizes how well it can anticipate and identify strokes [5]. To guar-\nantee precision and applicability to real-world situations, the dataset is meticulously cho-\nsen and preprocessed. In order to improve pr ediction performance, the suggested meth-\nodology presents a hybrid deep learning model that combines together the advantages of \nCNN, recurrent neural networks (RNNs) and long short-term memory (LSTM), algo-\nrithms [6]. The p",
+        "This organized search technique enabled a thorough study of AI’s po-\ntential for improving stroke diagnosis and patient outcomes (Figure 1). \n \nFigure 1. PRISMA flow diagram for search strategy and selection criteria (Adapted from the preferred\nreporting systemic reviews and meta-analyses (PRISMA) guidelines).",
+        "; Petzsche, M.H.; Baazaoui, H.; Yang, K.; Musio, F.A.; Huang, H.; Robben, D.; Seia, J.O.;\net al. ISLES’24—A Real-World Longitudinal Multimodal Stroke Dataset. arXiv 2024, arXiv:2408.11142.\n15. Al-Janabi, O.M.; El Refaei, A.; Elgazzar, T.; Mahmood, Y.M.; Bakir, D.; Gajjar, A.; Alateya, A.; Jha, S.K.; Ghozy, S.; Kallmes, D.F.;\net al. Current Stroke Solutions Using Artificial Intelligence: A Review of the Literature. Brain Sci. 2024, 14, 1182. [CrossRef]\n[PubMed]\n16. Heo, J.; Ryu, W.-S.; Chung, J.-",
+        "8.\n“Early Ischemic Stoke\nDetection Using Deep\nLearning: A Systemic\nLiterature Review” [8]\n• To assess new deep\nlearning techniques\nfor early ischemic\nstroke identification\nand suggest\nimprovements and\nfuture research\ndirections.\nThe approach entails reviewing\nthe literature on deep learning\nfor early ischemic stroke\ndetection and examining models,\ndata, and metrics to find trends\nand research requirements.\nThe ConvNeXt Base model\npredicted ischemic strokes from\nMRI images with 84% accuracy,\nindi",
+        "Systematic evaluation of AI stroke solutions has provided comprehensive insights into\nthe current state of commercial and research-based platforms. Al-Janabi et al. [15] conducted\na systematic review of 31 studies examining AI applications for stroke detection, focusing\nprimarily on acute ischemic stroke and large vessel occlusions with platforms including\nViz.ai, RapidAI, and Brainomix®. The review demonstrated that these AI tools consistently\nachieved high levels of diagnostic accuracy, with R",
+        "Eng. Proc. 2025, 107, 123 10 of 11\nTable 4 presents a comparison of various studies conducted in different years using\ndifferent datasets to achieve the highest accuracy.\nTable 4. Accuracy of various algorithms from the literature.\nRef.",
+        "Diagnostics 2025, 15, 2486 19 of 23\narea, the more the model relies on that area in making its final decision. In contrast,\nthe blue areas indicate little to no contribution.\n• Shape and Localization: Heatmaps with focused dark red regions suggest confident\nand localized attention, likely corresponding to stroke-affected areas.\n• Visual Alignment with Lesions: Although no separate segmentation mask technique\nwas used, visual inspection indicates that the darkest red areas in the heatmaps often\na"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 1.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "Which deep learning models are integrated into the hybrid deep learning approach for improved brain stroke detection and prediction?",
+      "response": "The hybrid deep learning approach integrates convolutional neural networks (CNNs), recurrent neural networks (RNNs), and long short-term memory (LSTM) networks [S1][S2][S3][S4]. The study merged these models to reach an overall accuracy of 96% in identifying stroke risk as low, medium, or high [S1][S6].",
+      "reference": "This research investigates the use of hybrid deep learning models, such as recurrent neural networks (RNNs), long short-term memory (LSTM), and convolutional neural networks (CNNs), to improve stroke prediction accuracy.",
+      "retrieved_contexts": [
+        "Academic Editors: Gloria Iyawa and\nAsiya Khan\nReceived: 19 December 2024\nRevised: 2 February 2025\nAccepted: 10 February 2025\nPublished: 22 April 2025\nCitation: Thakre, G.; Raut, R.; Puri,\nC.; Verma, P . A Hybrid Deep Learning\nApproach for Improved Detection and\nPrediction of Brain Stroke. Appl. Sci.\n2025, 15, 4639. https://doi.org/\n10.3390/app15094639\nCopyright: © 2025 by the authors.\nLicensee MDPI, Basel, Switzerland.\nThis article is an open access article\ndistributed under the terms and\ncondit",
+        "Appl. Sci. 2025, 15, 4639 3 of 28\nchosen and preprocessed. In order to improve prediction performance, the suggested\nmethodology presents a hybrid deep learning model that combines together the advan-\ntages of CNN, recurrent neural networks (RNNs) and long short-term memory (LSTM),\nalgorithms [6]. The proposed system’s features and utility highlight how useful it is in\nclinical settings and provide information on risk assessment and early identification. The\nefficacy of the system is demonstrate",
+        "Appl. Sci. 2025, 15, 4639 13 of 28\n6.4. Hybrid Deep Learning Model\nProfound learning has shown to be an amazing asset in clinical conclusions by em-\npowering the extraction of highlights from complex datasets, including patient narratives,\nwellbeing markers, and physiological signs, without the requirement for express pro-\ngramming [76,77]. Nonetheless, independent profound learning models, even profound\nsemantic organizations, frequently battle with summed-up issues and boisterous informa-\ntion",
+        "To defeat these di ﬃculties, half-breed pro-\nfound learning models have been created by consolidating diﬀerent structures to improve \nprescient capabilities as shown in Figure 6 [78,79]. In mind stroke forecast and discovery, \nespecially utilizing numeric datasets, crossover models can coordinate CNNs, recurrent \nneural networks (RNNs), and long transient memory organizations (LSTMs) to deal with \npatient boundaries, for example, orientation, glucose level, BMI, work type, hypertension, \ncoronar",
+        "Appl. Sci. 2025, 15, 4639 6 of 28\ncharacteristics and categorize stroke events. The study found that LeNet achieved 96–97%\naccuracy for classification and 85–87% accuracy for segmentation; however, segmentation\naccuracy and high computational demand prevented real-time clinical applications.\nChen et al. [6] suggested a hybrid deep transfer learning system for improving stroke\nrisk prediction. Their process includes fine-tuning a pre-trained model utilizing a hybrid\napproach while adhering to eth",
+        "The current study compared\nthe performance of these individual models with the developed hybrid model on the\nbrain stroke dataset. By merging these models, we reached an overall accuracy of 96% in\nidentifying stroke risk as low, medium, or high. This categorization may offer healthcare\npractitioners actionable insights by assisting them and allowing them to make better\ndecisions. This technique represents a substantial improvement in stroke prediction and\npreventive healthcare practices. The mod",
+        "Appl. Sci. 2025, 15, 4639 22 of 28\naccurately assess and identify risk levels demonstrates its potential to increase diagnostic\nprecision and allow for prompt actions. Deep learning models are more resilient in handling\ncomplicated correlations between input variables, giving them an edge over classic stroke\nprediction algorithms.\nThe combination (hybrid) model has an accuracy of 92%, with 90% precision, 91%\nrecall, and a 90% F1-score. This high degree of performance demonstrates the hybrid ap-\n",
+        "2.\n“A Novel Machine\nLearning based Stroke\nPrediction System\nusing Magnetic\nResonance Imaging\nand Adaptive New\nFuzzy Inference\nSystem” [2]\n• To manage data\nuncertainty and raise\nprediction accuracy,\nuse an adaptive new\nfuzzy inference\nsystem (ANFIS).\nITo deal with uncertainty and\nenhance stroke prediction\naccuracy, the strategy employs\nMRI data preprocessing and\nANFIS, which has been\nevaluated against other\napproaches on a different\ndataset.\nThe paper introduces an\nANFIS-based stroke prediction\nm"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.67,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What is a frequent problem encountered in brain computed tomography image classification when using machine learning and deep learning algorithms?",
+      "response": "A frequent problem is class imbalance: brain CT datasets may have far fewer examples of the clinically important classes (e.g., hemorrhagic stroke or specific hemorrhage subtypes) than normal/majority classes, which can bias machine learning and deep learning classifiers. Hossain et al., for example, used data-augmentation methods to address class imbalance problems when classifying stroke in CT images [S1]. Another related issue is limited training data in medical imaging, which is why transfer learning—such as using an ImageNet-pretrained ResNet-18—is commonly employed [S7].",
+      "reference": "Brain computed tomography image classification using machine learning and deep learning algorithms frequently suffers from a class imbalance problem.",
+      "retrieved_contexts": [
+        "AI 2025, 6, 202 2 of 22\ndisability across the globe. Salman et al. created the Hemorrhage Evaluation and Detector\nSystem for Underserved Populations (HEADS-UP) [2], a cloud-based machine learning sys-\ntem with a specific application in the detection of intracranial hemorrhage from computed\ntomography (CT) scans in resource-poor healthcare settings. Leveraging Google Cloud\nVertex AutoML with the Radiological Society of North America dataset of 752,803 labeled\nimages, the system attained impressiv",
+        "AI 2025, 6, 202 22 of 22\n4. Abdi, H.; Sattar, M.U.; Hasan, R.; Dattana, V .; Mahmood, S. Stroke Detection in Brain CT Images Using Convolutional Neural\nNetworks: Model Development, Optimization and Interpretability. Information 2025, 16, 345. [CrossRef]\n5. Patil, S.; Rossi, R.; Jabrah, D.; Doyle, K. Detection, Diagnosis and Treatment of Acute Ischemic Stroke: Current and Future\nPerspectives. Front. Med. Technol. 2022, 4, 748949. [CrossRef] [PubMed]\n6. Wang, M.; Lin, Y.; Gu, F.; Xing, W.; Li, B.;",
+        "Stroke ranks second in terms of illness-related mortality worldwide, making it one of\nthe top diseases. About 16 million individuals worldwide suffer from this illness each year,\nand about 38% of cases result in death. One very useful tool for helping with the medical\ndiagnosis of stroke is CT. However, different experts may have different opinions about the\nanalysis’s features. To overcome the difficulty of detecting stroke from CT pictures, this\nstudy suggests a completely automated method bas",
+        "Diagnostics 2025, 15, 2486 23 of 23\n30. Abbaoui, W.; Retal, S.; Ziti, S.; El Bhiri, B. Automated Ischemic Stroke Classification from MRI Scans: Using a Vision Transformer\nApproach. J. Clin. Med. 2024, 13, 2323. [CrossRef]\n31. Soni, J. Toward the Detection of Intracranial Hemorrhage: A Transfer Learning Approach. Artif. Intell. Surg. 2025, 5, 221–238.\n[CrossRef]\n32. Izdihar, Z.N. Pretrained Deep CNN Model Evaluation for Brain Stroke Detection Using CT Scan Data. In Proceedings of the 2024\nBeyond ",
+        "The study used SHAP methodology to ensure explainability at the\ncohort and individual patient levels, showing that age, baseline symptoms, brain atrophy\nmarkers, and early ischemic core features were the most significant predictors of post-stroke\nfunctional outcomes.\nThe application of sophisticated deep learning architectures in medical image classifi-\ncation has yielded remarkable results across multiple domains, with success demonstrated\nin brain pathology detection and classification. Patel ",
+        "In this paper, a ResNet-18 model was trained on 6653 CT brain scans (hemor-\nrhagic stroke, ischemia, normal) with two-phase fine-tuning and transfer learning, XRAI\nexplainability analysis, and web-based clinical decision support system integration. The\nmodel performed with 95% test accuracy with good performance across all classes. This\nsystem has great potential for emergency rooms and resource-poor environments, offering\nquick stroke evaluation when specialists are not available, particularly ",
+        "3. Experimental Setup\nTo construct a robust deep learning model for the classification of stroke types from\nCT brain scans, a staged training strategy founded on transfer learning and a ResNet-18\nbackbone was used. This architecture was chosen because it offered a balance of model\ndepth, parameter efficiency, and performance, particularly well-suited for medical imaging\ntasks where training data is limited. The ResNet-18 model was initialized with weights\npretrained on the ImageNet dataset, allo",
+        "The naïve\nbayes (NB) classifier has an accuracy of 85.6%. For random forest (RF), k-NN, and J48,\nthe accuracy is 99.8%. NB’s f-measure, recall, and precision are 86.1%, 85.6%, and 88.1%,\nrespectively. The precision, recall, and f-measures of the J48, k-NN, and RF are all 99.8%,\n99.8%, and 99.8%, respectively [9].\nThis study uses CNN and deep learning models to try to diagnose brain stroke using\nMRI. The suggested method uses semantic segmentation to identify problematic regions\nand classify brai"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What three StyleGAN-based data augmentation approaches were systematically implemented in this study?",
+      "response": "The three StyleGAN-based data augmentation approaches implemented were StyleGAN2, StyleGAN3, and conditional StyleGAN3 [S1].",
+      "reference": "The study systematically implemented three style-based generative adversarial network (StyleGAN)-based data augmentation approaches: StyleGAN2, StyleGAN3, and conditional StyleGAN3.",
+      "retrieved_contexts": [
+        "Academic Editors: Teen-Hang Meen,\nChun-Yen Chang and Cheng-Fu Yang\nPublished: 2 February 2026\nCopyright: © 2026 by the authors.\nLicensee MDPI, Basel, Switzerland.\nThis article is an open access article\ndistributed under the terms and\nconditions of the Creative Commons\nAttribution (CC BY) license.\nProceeding Paper\nEnhancing Imbalanced Data Classification Using Style-Based\nGenerative Adversarial Network-Based Data Augmentation:\nA Case Study of Computed Tomography Images of Brain Stroke †\nJhao-Sin ",
+        "Eng. Proc. 2026, 120, 26 6 of 8\nbeen improved from 0.580± 0.07 by SG2 to 0.659± 0.05 by SG3. This indicated that SG3’s\nalias-free architecture effectively enhanced performance for the difficult-to-classify minority\nstroke class. For the normal class, precision and recall remained high across all three\nStyleGAN-based approaches. This demonstrated that the data augmentation strategies\ndid not compromise the classification performance of the majority class. From Table 2,\nSG3 outperformed the other ",
+        "Eng. Proc. 2026, 120, 26 4 of 8\nLG =−Ez∼p(z),c∼pdt(c)[D(G(z, c), c)] + λpath·Lpath (10)\nwhere Lpath is defined as Equation (4).\n3. Methodology\nThe research method for generating synthetic stroke images is depicted in Figure 1.\nFigure 1. Stroke data augmentation using StyleGAN.\n3.1. StyleGAN Models for Stroke Image Generation\nThe developed method comprised two modules: StyleGAN models, such as Style-\nGAN2 (SG2), StyleGAN3 (SG3), and conditional StyleGAN3 (CSG3), to extend training\ndata size, and ",
+        "Eng. Proc. 2026, 120, 26 7 of 8\nFigure 3. FID results for StyleGAN2, StyleGAN3, and conditional StyleGAN3.\n5. Conclusions\nTo address the class imbalance problem in stroke classification, we compared\nStyleGAN-based over-sampling models: StyleGAN2, StyleGAN3, and conditional Style-\nGAN3. We selected the best generative model among them. Although the SG3 model\nachieved the best classification performance with an ensemble learning model, on genera-\ntion quality and model generalization, StyleGAN3 sh",
+        "Diagnostics 2025, 15, 2486 9 of 23\nTable 2. Dataset statistics used in this study for brain stroke CT-scan images.\nDataset Name Type Number of CT Scans\nCT-scan Images from\nRepublic of Turkey’s\nMinistry of Health’s [28].\nIschemic Stroke 1130\nHemorrhagic Stroke 1093\nNormal (No Stroke) 4427\nAll classes (Total images) 6650\n4.3. Data Preprocessing\nThis study utilizes CT-scan images for training three state-of-the-art DL pretrained\nmodels: TNT, MaxViT, and ConvNext. To ensure compatibility and optimal",
+        "Keywords: stroke detection; brain CT images; data augmentation; StyleGAN\n1. Introduction\nStroke is a leading cause of death and disability worldwide, particularly in elderly\npopulations [1]. According to the World Health Organization, approximately 15 million\npeople worldwide experience stroke annually. The report indicates one-third die and\nanother one-third are left with permanent disabilities [2]. Recently, computed tomography\n(CT) scans have been widely used in the clinical domain for brain ",
+        "Eng. Proc. 2026, 120, 26 3 of 8\nDiscriminator loss is calculated as follows:\nLD = E∼\nx∼Pg\nh\nD\n\u0010∼\nx\n\u0011i\n− Ex∼Pr [D(x)] + λE ˆx∼Pˆx\nh\n(|∇ ˆxD( ˆx)|2− 1)2\ni\n(2)\nGenerator loss is calculated as follows:\nLG =−Ez∼p(z)[D(G(z))] (3)\nIt includes the following path length regularization loss.\nLpath = Ew,y(|Jw(G(w))·y|2− a)2 (4)\nTotal generator loss is calculated as follows:\nLtotal\nG =LG + λpath·Lpath (5)\n2.2. StyleGAN3\nStyleGAN3 (SG3) builds upon StyleGAN2 with the same loss function and path\nregularizatio",
+        "4401–4410.\n11. Karras, T.; Laine, S.; Aittala, M.; Hellsten, J.; Lehtinen, J.; Aila, T. Analyzing and improving the image quality of stylegan. In\nProceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, Seattle, WA, USA, 14–19 June 2020;\npp. 8110–8119.\n12. Karras, T.; Aittala, M.; Hellsten, J.; Laine, S.; Lehtinen, J.; Aila, T. Training generative adversarial networks with limited data. Adv.\nNeural Inf. Process. Syst. 2020, 33, 12104–12114.\n13. Karras, T.; Aittala, M.; "
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 1.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "Which of the three StyleGAN data augmentation approaches demonstrated the best performance in terms of precision, recall, and F1-score for imbalanced brain stroke classification?",
+      "response": "StyleGAN3 (SG3) demonstrated the best performance in terms of precision, recall, and F1-score for imbalanced brain stroke classification [S1][S2][S4].",
+      "reference": "StyleGAN3 effectively outperforms the other two StyleGAN data augmentation approaches in terms of precision, recall, and F1-score when addressing highly imbalanced brain stroke classification.",
+      "retrieved_contexts": [
+        "Academic Editors: Teen-Hang Meen,\nChun-Yen Chang and Cheng-Fu Yang\nPublished: 2 February 2026\nCopyright: © 2026 by the authors.\nLicensee MDPI, Basel, Switzerland.\nThis article is an open access article\ndistributed under the terms and\nconditions of the Creative Commons\nAttribution (CC BY) license.\nProceeding Paper\nEnhancing Imbalanced Data Classification Using Style-Based\nGenerative Adversarial Network-Based Data Augmentation:\nA Case Study of Computed Tomography Images of Brain Stroke †\nJhao-Sin ",
+        "Eng. Proc. 2026, 120, 26 6 of 8\nbeen improved from 0.580± 0.07 by SG2 to 0.659± 0.05 by SG3. This indicated that SG3’s\nalias-free architecture effectively enhanced performance for the difficult-to-classify minority\nstroke class. For the normal class, precision and recall remained high across all three\nStyleGAN-based approaches. This demonstrated that the data augmentation strategies\ndid not compromise the classification performance of the majority class. From Table 2,\nSG3 outperformed the other ",
+        "Recently,\nStyleGAN3 has introduced alias-free convolution to effectively avoid aliasing issues for\ngenerated images [13], ensuring virtual image correctness after rotation or translation. Fur-\nthermore, conditional StyleGAN3 can produce virtual images according to specific label(s).\nIn this study, we applied a StyleGAN-based model to boost imbalanced stroke detec-\ntion performance by balancing class distribution. Furthermore, we adopted an ensemble\nlearning predictive model to integrate predicti",
+        "Eng. Proc. 2026, 120, 26 7 of 8\nFigure 3. FID results for StyleGAN2, StyleGAN3, and conditional StyleGAN3.\n5. Conclusions\nTo address the class imbalance problem in stroke classification, we compared\nStyleGAN-based over-sampling models: StyleGAN2, StyleGAN3, and conditional Style-\nGAN3. We selected the best generative model among them. Although the SG3 model\nachieved the best classification performance with an ensemble learning model, on genera-\ntion quality and model generalization, StyleGAN3 sh",
+        "Eng. Proc. 2026, 120, 26 4 of 8\nLG =−Ez∼p(z),c∼pdt(c)[D(G(z, c), c)] + λpath·Lpath (10)\nwhere Lpath is defined as Equation (4).\n3. Methodology\nThe research method for generating synthetic stroke images is depicted in Figure 1.\nFigure 1. Stroke data augmentation using StyleGAN.\n3.1. StyleGAN Models for Stroke Image Generation\nThe developed method comprised two modules: StyleGAN models, such as Style-\nGAN2 (SG2), StyleGAN3 (SG3), and conditional StyleGAN3 (CSG3), to extend training\ndata size, and ",
+        "Keywords: stroke detection; brain CT images; data augmentation; StyleGAN\n1. Introduction\nStroke is a leading cause of death and disability worldwide, particularly in elderly\npopulations [1]. According to the World Health Organization, approximately 15 million\npeople worldwide experience stroke annually. The report indicates one-third die and\nanother one-third are left with permanent disabilities [2]. Recently, computed tomography\n(CT) scans have been widely used in the clinical domain for brain ",
+        "Diagnostics 2025, 15, 2486 17 of 23\nstrategy and further confirm the effectiveness of transformer-based architectures coupled\nwith synthetic data augmentation for improving stroke classification performance.\n6.2. Comparison with the State-of-the-Art Methods\nTo investigate our method’s prediction performance and illustrate its effectiveness,\nwe conducted a comparative analysis against the baseline method introduced in the study\ntitled “Classification of brain ischemia and hemorrhagic stroke using",
+        "The visualizing count of classes (stroke and non-stroke) (a) before data augmentation and\n(b) after data augmentation.\nTable 3 lists the many machine learning and deep learning models that have been\ninvestigated for stroke prediction utilizing various datasets and methodologies. To improve\nprediction accuracy, researchers have experimented with ensemble approaches, logistic\nregression (LR), decision trees (DT), random forests (RF), and neural networks. To solve is-\nsues like data imbalance and f"
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.67,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "What hardware was used to conduct the experiments in this study?",
+      "response": "The supplied evidence does not state what hardware was used for the experiments. The excerpts mention implementation details [S1] but provide no specific hardware information such as GPU, CPU, or other equipment for any study. Therefore, the evidence is insufficient to answer this question.",
+      "reference": "All experiments were conducted on a computer equipped with an Intel(R) Core(TM) i7-14700KF CPU (27-processor) and Nvidia GeForce RTX 4090 graphics (24 gigabytes random access memory) running Ubuntu 24.04 LTS.",
+      "retrieved_contexts": [
+        "Diagnostics 2025, 15, 2486 3 of 23\nThe remainder of this research is structured as follows: Section 2 provides background\nby explaining the medical-related and AI-related terms and concepts. Section 3 summarizes\nthe relevant research literature and outlines the ML, DL, and transfer learning (TL) methods\ndeveloped for stroke detection. Section 4 describes the dataset and methodology. Section 5\nexplains the experimental design, covering the evaluation metrics, the training/testing\nprocedures, and ",
+        "Eng. Proc. 2025, 107, 123 5 of 11\nto other machine learning techniques. Therefore, both patients and medical professionals\ncan help treat a viable stroke [11].\nIn this study, stroke prediction is performed using machine learning techniques such\nas AdaBoost, AdaBoost with stochastic gradient decent (SGD), Random Forest, linear SVM,\nPoly SVM, RBG SVM, Logistic Regression, Gaussian Naïve Bayes, and Decision Tree. The\nRandom Forest classifier was determined to be the most effective of these algorith",
+        "Bell palsy (10%),\nstroke (7%), conversion disorders (6%), migraine (28%), and seizures (15%) were the most\nfrequently diagnosed conditions. For stroke, migraine, seizures, and conversion disorders,\nthe relative proportions of diseases in children and adults were considerably different [4].\nThe focus of this study is the diet that stroke patients should follow to prevent the\nnegative effects of their condition. This entailed researching the issues and creating a\ncustomized diet for each one. Dysp",
+        "AI 2025, 6, 202 3 of 22\nThe creation of portable diagnostic technologies is an especially promising direction\nfor the augmentation of stroke detection capabilities, with utility in underserved popu-\nlations and remote clinical environments. The Strokefinder MD100, created by Medfield\nDiagnostics, is an example of a microwave-based technology used to detect intracranial\nhemorrhage with 100% sensitivity and 75% specificity within around 45 s, illustrating\nthe possibility of fast, non-invasive eval",
+        "The study demonstrated\nthe prospect of non-invasive health examination methods that could augment conventional\ndiagnostic methods, especially in environments where conventional medical imaging may\nnot be easily accessible.\nThe advent of XAI in medical imaging has overcome one of the greatest obstacles to\nclinical deployment of AI systems: the “black box” characteristic of deep learning mod-\nels that prevent clinicians from interpreting and trusting automated diagnostic decisions.\nBrima and Atemk",
+        "Eng. Proc. 2025, 107, 123 3 of 11\nand neural repair mechanisms inherently involve cellular and circuit plasticity. We describe\nour new model, examine existing methods for brain regeneration following a stroke, and\nreview the data, reasoning, and biological underpinnings of our innovative approach to\nlanguage and upper-extremity rehabilitation. We think this neurological model for brain\nregeneration may eventually result in a stroke cure by improving plasticity at the level of\nbrain network inter",
+        "Systematic evaluation of AI stroke solutions has provided comprehensive insights into\nthe current state of commercial and research-based platforms. Al-Janabi et al. [15] conducted\na systematic review of 31 studies examining AI applications for stroke detection, focusing\nprimarily on acute ischemic stroke and large vessel occlusions with platforms including\nViz.ai, RapidAI, and Brainomix®. The review demonstrated that these AI tools consistently\nachieved high levels of diagnostic accuracy, with R",
+        "In any case, to\ncompletely burden the advantages of simulated intelligence in stroke care, difficulties, for\nexample, the requirement for powerful, different datasets and guaranteeing that simulated\nintelligence models are interpretable and morally sent, should be addressed [2,3].\nLate investigations on mind stroke expectation have progressively centered around\nutilizing advanced computational strategies, especially AI and profound learning methods.\nThese investigations investigate the utilizati"
+      ],
+      "metrics": {
+        "faithfulness": 0.5,
+        "factual_correctness": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    },
+    {
+      "user_input": "Which StyleGAN model achieved the lowest FID score and what was that score?",
+      "response": "The lowest FID score was achieved by conditional StyleGAN3 (CSG3), with a score of 63.62 at 1000 k images [S2].",
+      "reference": "CSG3 achieved the best FID at 63.62 with 1000 k images.",
+      "retrieved_contexts": [
+        "Eng. Proc. 2026, 120, 26 7 of 8\nFigure 3. FID results for StyleGAN2, StyleGAN3, and conditional StyleGAN3.\n5. Conclusions\nTo address the class imbalance problem in stroke classification, we compared\nStyleGAN-based over-sampling models: StyleGAN2, StyleGAN3, and conditional Style-\nGAN3. We selected the best generative model among them. Although the SG3 model\nachieved the best classification performance with an ensemble learning model, on genera-\ntion quality and model generalization, StyleGAN3 sh",
+        "Classification accuracy using StyleGAN2, StyleGAN3, and conditional StyleGAN3.\n4.4. Comparison for FID Results\nWe selected FID to measure image generation quality using Equation (18).\nFID =∥ µr− µg∥2 + Tr\n\u0010\nΣr + Σg− 2\n\u0000\nΣrΣg\n\u00011/2\u0011\n(18)\nwhere∥·∥ represents the Euclidean norm, Tr() denotes the matrix trace (sum of diagonal\nelements), and\n\u0000\nΣrΣg\n\u00011/2 represents the matrix square root of ΣrΣg. µr and µg represent the\naverage vectors of real and generated images, respectively.Σr and Σg are the corres",
+        "4401–4410.\n11. Karras, T.; Laine, S.; Aittala, M.; Hellsten, J.; Lehtinen, J.; Aila, T. Analyzing and improving the image quality of stylegan. In\nProceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, Seattle, WA, USA, 14–19 June 2020;\npp. 8110–8119.\n12. Karras, T.; Aittala, M.; Hellsten, J.; Laine, S.; Lehtinen, J.; Aila, T. Training generative adversarial networks with limited data. Adv.\nNeural Inf. Process. Syst. 2020, 33, 12104–12114.\n13. Karras, T.; Aittala, M.; ",
+        "Eng. Proc. 2026, 120, 26 3 of 8\nDiscriminator loss is calculated as follows:\nLD = E∼\nx∼Pg\nh\nD\n\u0010∼\nx\n\u0011i\n− Ex∼Pr [D(x)] + λE ˆx∼Pˆx\nh\n(|∇ ˆxD( ˆx)|2− 1)2\ni\n(2)\nGenerator loss is calculated as follows:\nLG =−Ez∼p(z)[D(G(z))] (3)\nIt includes the following path length regularization loss.\nLpath = Ew,y(|Jw(G(w))·y|2− a)2 (4)\nTotal generator loss is calculated as follows:\nLtotal\nG =LG + λpath·Lpath (5)\n2.2. StyleGAN3\nStyleGAN3 (SG3) builds upon StyleGAN2 with the same loss function and path\nregularizatio",
+        "Recently,\nStyleGAN3 has introduced alias-free convolution to effectively avoid aliasing issues for\ngenerated images [13], ensuring virtual image correctness after rotation or translation. Fur-\nthermore, conditional StyleGAN3 can produce virtual images according to specific label(s).\nIn this study, we applied a StyleGAN-based model to boost imbalanced stroke detec-\ntion performance by balancing class distribution. Furthermore, we adopted an ensemble\nlearning predictive model to integrate predicti",
+        "Eng. Proc. 2026, 120, 26 6 of 8\nbeen improved from 0.580± 0.07 by SG2 to 0.659± 0.05 by SG3. This indicated that SG3’s\nalias-free architecture effectively enhanced performance for the difficult-to-classify minority\nstroke class. For the normal class, precision and recall remained high across all three\nStyleGAN-based approaches. This demonstrated that the data augmentation strategies\ndid not compromise the classification performance of the majority class. From Table 2,\nSG3 outperformed the other ",
+        "AI 2025, 6, 202 9 of 22\nFigure 2. Experimental Setup Flowchart.\nTo further enhance performance, a fine-tuning phase was conducted that re-cycled\nthe model weights obtained in the initial training. During this phase, a smaller learning\nrate of 1 × 10−5 was utilized to allow for more subtle and refined weight adjustments.\nFi-ne-tuning for an additional five epochs was conducted. This second phase permitted the\nmodel to continue adapting to the subtleties of the medical imaging task without overfit",
+        "Appl. Sci. 2025, 15, 4639 17 of 28\nTable 5. Evaluation metrics of deep learning models and hybrid approach after data augmentation.\nModel Accuracy Precision Recall F1-Score\nRNN Model 0.94 0.95 0.94 0.95\nLSTM Model 0.95 0.96 0.96 0.96\nCNN Model 0.70 0.76 0.73 0.75\nProposed\nHybrid Model 0.96 0.94 0.97 0.95\nAppl. Sci. 2025, 15, x FOR PEER REVIEW 17 of 28 \n \n  \n(a) (b) \n  \n(c) (d) \nFigure 8. Post-augmentation accuracy comparison. ( a)  A c c u r a c y  o f  R N N  m o d e l ,  (b) accuracy of \nLSTM "
+      ],
+      "metrics": {
+        "faithfulness": 0.0,
+        "factual_correctness": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      },
+      "reasons": {
+        "faithfulness": null,
+        "factual_correctness": null,
+        "context_precision": null,
+        "context_recall": null
+      }
+    }
+  ],
+  "dataset_sha256": "9e2bf34a94b7d3d7a38678c61fbae1d8f8318292834120b028f7347fc27b3930"
+}
