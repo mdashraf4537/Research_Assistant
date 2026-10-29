@@ -69,7 +69,7 @@ class SqliteBm25Index:
         terms = re.findall(r"[\w-]+", query.lower())
         if not terms:
             return []
-        fts_query = " AND ".join(f'"{term}"' for term in terms)
+        fts_query = " OR ".join(f'"{term}"' for term in terms)
         connection = self._connect()
         try:
             rows = connection.execute(
@@ -96,3 +96,109 @@ class SqliteBm25Index:
             )
             for chunk_id, text, metadata_json, score in rows
         ]
+
+    def get_chunk_by_id(self, chunk_id: str) -> RetrievedChunk | None:
+        connection = self._connect()
+        try:
+            row = connection.execute(
+                """
+                SELECT chunk_fts.chunk_id, chunk_fts.text, chunk_metadata.metadata_json
+                FROM chunk_fts
+                JOIN chunk_metadata ON chunk_metadata.chunk_id = chunk_fts.chunk_id
+                WHERE chunk_fts.chunk_id = ?
+                """,
+                (chunk_id,),
+            ).fetchone()
+        finally:
+            connection.close()
+        if not row:
+            return None
+        c_id, text, metadata_json = row
+        return RetrievedChunk(
+            chunk_id=c_id,
+            text=text,
+            metadata=json.loads(metadata_json),
+            source="bm25",
+            score=1.0,
+        )
+
+    def get_chunks_by_document(
+        self, filename: str, page_number: int | None = None, limit: int = 50
+    ) -> list[RetrievedChunk]:
+        connection = self._connect()
+        try:
+            if page_number is not None:
+                rows = connection.execute(
+                    """
+                    SELECT chunk_fts.chunk_id, chunk_fts.text, chunk_metadata.metadata_json
+                    FROM chunk_fts
+                    JOIN chunk_metadata ON chunk_metadata.chunk_id = chunk_fts.chunk_id
+                    WHERE json_extract(chunk_metadata.metadata_json, '$.filename') = ?
+                      AND json_extract(chunk_metadata.metadata_json, '$.page_number') = ?
+                    ORDER BY CAST(json_extract(chunk_metadata.metadata_json, '$.chunk_index') AS INTEGER)
+                    LIMIT ?
+                    """,
+                    (filename, page_number, limit),
+                ).fetchall()
+            else:
+                rows = connection.execute(
+                    """
+                    SELECT chunk_fts.chunk_id, chunk_fts.text, chunk_metadata.metadata_json
+                    FROM chunk_fts
+                    JOIN chunk_metadata ON chunk_metadata.chunk_id = chunk_fts.chunk_id
+                    WHERE json_extract(chunk_metadata.metadata_json, '$.filename') = ?
+                    ORDER BY CAST(json_extract(chunk_metadata.metadata_json, '$.chunk_index') AS INTEGER)
+                    LIMIT ?
+                    """,
+                    (filename, limit),
+                ).fetchall()
+        finally:
+            connection.close()
+        return [
+            RetrievedChunk(
+                chunk_id=c_id,
+                text=text,
+                metadata=json.loads(meta),
+                source="bm25",
+                score=1.0,
+            )
+            for c_id, text, meta in rows
+        ]
+
+    def list_indexed_documents(self) -> list[dict[str, object]]:
+        connection = self._connect()
+        try:
+            rows = connection.execute(
+                """
+                SELECT json_extract(metadata_json, '$.filename') AS filename,
+                       COUNT(*) AS chunk_count,
+                       MAX(CAST(json_extract(metadata_json, '$.page_number') AS INTEGER)) AS page_count
+                FROM chunk_metadata
+                GROUP BY 1
+                ORDER BY 1
+                """
+            ).fetchall()
+        finally:
+            connection.close()
+        return [
+            {"filename": str(filename), "chunk_count": int(chunk_count), "page_count": int(page_count or 1)}
+            for filename, chunk_count, page_count in rows
+            if filename is not None
+        ]
+
+    def delete_document(self, filename: str) -> int:
+        connection = self._connect()
+        try:
+            rows = connection.execute(
+                "SELECT chunk_id FROM chunk_metadata WHERE json_extract(metadata_json, '$.filename') = ?",
+                (filename,),
+            ).fetchall()
+            chunk_ids = [r[0] for r in rows]
+            for c_id in chunk_ids:
+                connection.execute("DELETE FROM chunk_fts WHERE chunk_id = ?", (c_id,))
+                connection.execute("DELETE FROM chunk_metadata WHERE chunk_id = ?", (c_id,))
+            connection.commit()
+            return len(chunk_ids)
+        finally:
+            connection.close()
+

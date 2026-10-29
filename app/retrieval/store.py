@@ -15,3 +15,9 @@ class DualWriteChunkStore:
     def upsert(self, chunks: Sequence[ChunkRecord], embeddings: Sequence[Sequence[float]]) -> None:
         self._vector_store.upsert(chunks, embeddings)
         self._lexical_index.upsert(chunks)
+
+    def delete_document(self, filename: str) -> int:
+        if hasattr(self._vector_store, "delete"):
+            self._vector_store.delete(filename)
+        return self._lexical_index.delete_document(filename)
+

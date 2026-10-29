@@ -1,28 +1,300 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content="Evidence-led research workspace" /><title>Research Desk</title><link rel="stylesheet" href="/assets/styles.css" /></head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Evidence-led research workspace with Agentic RAG" />
+    <title>Research Desk · Agentic RAG</title>
+    <link rel="stylesheet" href="/assets/styles.css?v=1.0.6" />
+  </head>
   <body>
-    <div class="app-shell">
+    <!-- Login Screen for First-Time or Unauthenticated Users -->
+    <div id="login-view" class="login-view" style="display: flex;">
+      <div class="login-card">
+        <div class="login-brand-header">
+          <span class="brand-mark" style="width: 36px; height: 36px; font-size: 1.2rem;">R</span>
+          <h1 class="login-brand-title">Research Desk</h1>
+        </div>
+        <p class="login-brand-subtitle">Evidence-Led Scientific Research Workspace</p>
+        <p class="card-copy" style="margin-top: 14px;">Enter your email to access your personal research library, analytical tools, and query session.</p>
+        
+        <form id="login-form" style="margin-top: 24px;">
+          <input
+            type="email"
+            id="login-email"
+            required
+            placeholder="name@organization.com"
+            autocomplete="email"
+            class="login-input"
+          />
+          <button type="submit" class="primary-button full-button" id="login-submit-btn" style="margin-top: 14px;">
+            Enter Workspace <span>↵</span>
+          </button>
+          <p id="login-error" class="message error"></p>
+        </form>
+        <p class="footnote" style="margin-top: 22px;">
+          Your uploaded documents and query histories are securely isolated under your personal session.
+        </p>
+      </div>
+    </div>
+
+    <!-- Main Workspace Application -->
+    <div class="app-shell hidden" id="app-shell" style="display: none;">
       <aside class="sidebar">
         <a class="brand" href="#workspace"><span class="brand-mark">R</span><span>Research Desk</span></a>
-        <nav class="nav" aria-label="Workspace navigation"><a class="nav-link active" href="#workspace"><span>⌘</span> Workspace</a><a class="nav-link" href="#library"><span>▤</span> Library</a><a class="nav-link" href="#evaluation"><span>◌</span> Evaluation</a></nav>
-        <div class="sidebar-footer"><div id="service-status" class="service-status"><i></i> Connecting</div><p>Your papers stay in your configured local index.</p></div>
+        <nav class="nav" aria-label="Workspace navigation">
+          <a class="nav-link active" href="#workspace"><span>⌘</span> Workspace</a>
+          <a class="nav-link" href="#library"><span>▤</span> Library</a>
+          <a class="nav-link" href="#evaluation"><span>◌</span> Evaluation</a>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="user-tracker-bar">
+            <span id="user-display-email" class="user-email-pill"></span>
+            <button type="button" id="btn-logout" class="switch-link" title="Sign out / Switch account">sign out</button>
+          </div>
+          <p>Your papers stay in your configured local index.</p>
+        </div>
       </aside>
       <main class="main-content" id="workspace">
-        <header class="topbar"><div><p class="kicker">RESEARCH WORKSPACE</p><h1>Make sense of the evidence.</h1></div><button class="icon-button" id="theme-toggle" type="button" aria-label="Toggle colour theme">◐</button></header>
+        <header class="topbar">
+          <div>
+            <p class="kicker">RESEARCH WORKSPACE</p>
+            <h1>Make sense of the evidence.</h1>
+          </div>
+          <button class="icon-button" id="theme-toggle" type="button" aria-label="Toggle colour theme">◐</button>
+        </header>
+
         <section class="question-card">
-          <div class="question-card-heading"><div><h2>What would you like to investigate?</h2><p>Answers are grounded in your uploaded research and linked back to the source.</p></div><label class="agent-switch"><input id="agent-mode" type="checkbox" /><span></span> Agent mode</label></div>
-          <form id="ask-form"><textarea id="question" required minlength="3" maxlength="4000" placeholder="Ask a question about your research collection…"></textarea><div class="composer-footer"><div class="suggestions"><button class="prompt-chip" type="button">Summarize the key findings</button><button class="prompt-chip" type="button">Compare the proposed methods</button></div><button id="ask-button" class="primary-button" type="submit">Ask research desk <span>↵</span></button></div></form>
+          <div class="question-card-heading">
+            <div>
+              <h2>What would you like to investigate?</h2>
+              <p>Answers are grounded in your uploaded research and linked back to the source.</p>
+            </div>
+            <div class="mode-selector" role="radiogroup" aria-label="Query mode">
+              <button type="button" class="mode-btn active" data-mode="direct" title="⚡ Direct QA: Hybrid retrieval (ChromaDB + BM25 + Cohere) with direct cited answers"><span>⚡</span> Direct QA</button>
+              <button type="button" class="mode-btn" data-mode="agent" title="🤖 Autonomous Agent: Multi-step reasoning with analytical tools across papers"><span>🤖</span> Agent Mode</button>
+              <button type="button" class="mode-btn" data-mode="plan" title="🧠 Plan &amp; Execute: Decomposes complex hypotheses into sub-questions and synthesizes evidence"><span>🧠</span> Plan &amp; Execute</button>
+            </div>
+            <!-- Hidden checkbox kept for backward compatibility with existing tests/scripts -->
+            <input id="agent-mode" type="checkbox" style="display:none;" />
+          </div>
+
+          <!-- Asking Dialogue Box (Persistent) -->
+          <form id="ask-form">
+            <textarea id="question" required minlength="3" maxlength="4000" placeholder="Ask a question about your research collection…"></textarea>
+            <div class="composer-footer">
+              <div id="mode-quick-suggestions" class="suggestions">
+                <!-- Populated dynamically by app.js based on active mode -->
+              </div>
+              <button id="ask-button" class="primary-button" type="submit">Ask research desk <span>↵</span></button>
+            </div>
+          </form>
           <p id="ask-error" class="message error" role="alert"></p>
+
+          <!-- 3 Distinct Sub-Pages Displayed Directly Below Asking Dialogue Box -->
+          <div class="mode-subpages-container">
+            <!-- Sub-Page 1: Direct QA -->
+            <div id="subpage-direct" class="mode-subpage active">
+              <div class="subpage-header">
+                <div class="subpage-title-badge badge-direct">
+                  <span>⚡</span> Direct QA Mode Active
+                </div>
+                <span class="subpage-kicker">Fast, Single-Turn Evidence Retrieval</span>
+              </div>
+              <p class="subpage-description">
+                Directly answers factual inquiries by querying your document repository simultaneously with semantic dense vector embeddings (ChromaDB) and lexical keyword search (SQLite BM25 FTS5). Fuses candidates via Reciprocal Rank Fusion (RRF, k=60) and Cohere Rerank v3 cross-encoders. Every response is strictly grounded in inspectable <code>[S1]..[Sn]</code> citations.
+              </p>
+
+              <div class="subpage-tags-row">
+                <span class="subpage-tag" title="ChromaDB dense vectors + SQLite BM25 exact keywords">🔍 Hybrid Dual-Index</span>
+                <span class="subpage-tag" title="RRF merges candidate ranks with k=60">⚡ RRF Fusion (k=60)</span>
+                <span class="subpage-tag" title="Cohere Rerank v3 cross-encoders re-score passages">🎯 Cohere Rerank</span>
+                <span class="subpage-tag" title="Bracketed citations link directly to source page numbers">🏷️ Verifiable [S#] Citations</span>
+                <span class="subpage-tag" title="Auto-failover to arXiv & Web when not covered in local papers">🌐 Academic Web Fallback</span>
+              </div>
+
+              <div id="direct-queries-container">
+                <!-- Dynamically rendered based on whether user has documents or empty library -->
+              </div>
+            </div>
+
+            <!-- Sub-Page 2: Agent Mode -->
+            <div id="subpage-agent" class="mode-subpage hidden">
+              <div class="subpage-header">
+                <div class="subpage-title-badge badge-agent">
+                  <span>🤖</span> Autonomous Agent Mode Active
+                </div>
+                <span class="subpage-kicker">Multi-Tool Reasoning &amp; Cross-Paper Analysis</span>
+              </div>
+              <p class="subpage-description">
+                Autonomous research agent powered by LlamaIndex and DeepSeek / Gemini. The agent analyzes the objective of your inquiry, selects specialized analytical tools, inspects raw document passages across your library, and synthesizes multi-step comparative investigations.
+              </p>
+
+              <div class="subpage-section-title">Specialized Agent Analytical Tools:</div>
+              <div class="agent-tools-grid">
+                <div class="agent-tool-box" data-prompt="Extract a markdown comparison table of classification accuracies, models, and datasets across all papers.">
+                  <div class="tool-box-header">
+                    <span class="tool-box-title">📊 Metrics Table</span>
+                    <span class="tool-badge">Tabular Extraction</span>
+                  </div>
+                  <p class="tool-box-desc">Mines performance statistics across papers and compiles a structured comparison table with models, accuracy %, datasets, and metrics.</p>
+                </div>
+
+                <div class="agent-tool-box" data-prompt="Compare research methodologies, deep learning models, and accuracy across the uploaded papers.">
+                  <div class="tool-box-header">
+                    <span class="tool-box-title">⚖️ Compare Papers</span>
+                    <span class="tool-badge">Comparative Contrast</span>
+                  </div>
+                  <p class="tool-box-desc">Performs a rigorous side-by-side comparative analysis of algorithmic architectures, feature choices, and trade-offs.</p>
+                </div>
+
+                <div class="agent-tool-box" data-prompt="Provide a comprehensive structured summary of the primary research paper including methodology and findings.">
+                  <div class="tool-box-header">
+                    <span class="tool-box-title">📑 Summarize Paper</span>
+                    <span class="tool-badge">Structured Synthesis</span>
+                  </div>
+                  <p class="tool-box-desc">Produces a multi-section structured breakdown covering objective, architecture, dataset, and clinical/empirical results.</p>
+                </div>
+
+                <div class="agent-tool-box" data-prompt="What were the exact sample sizes, training splits, and accuracy results across all papers?">
+                  <div class="tool-box-header">
+                    <span class="tool-box-title">🔢 Quantitative Stats</span>
+                    <span class="tool-badge">Numeric Extraction</span>
+                  </div>
+                  <p class="tool-box-desc">Queries exact patient cohort sizes, class distributions, confidence intervals, and statistical metrics across the corpus.</p>
+                </div>
+              </div>
+
+              <div id="agent-queries-container" style="margin-top: 18px;">
+                <!-- Dynamically rendered based on whether user has documents or empty library -->
+              </div>
+            </div>
+
+            <!-- Sub-Page 3: Plan & Execute -->
+            <div id="subpage-plan" class="mode-subpage hidden">
+              <div class="subpage-header">
+                <div class="subpage-title-badge badge-plan">
+                  <span>🧠</span> Plan &amp; Execute Mode Active
+                </div>
+                <span class="subpage-kicker">Hypothesis Decomposition &amp; Meta-Synthesis</span>
+              </div>
+              <p class="subpage-description">
+                A dedicated planning agent decomposes complex, multi-part research inquiries into structured sub-hypotheses. Each sub-question is independently investigated and answered with cited evidence, followed by an executive meta-analysis.
+              </p>
+
+              <div class="plan-workflow-steps">
+                <div class="workflow-step-pill">
+                  <span class="step-circle">1</span>
+                  <span><strong>Plan Decomposition</strong>: Breaks complex inquiry into targeted sub-questions</span>
+                </div>
+                <div class="workflow-step-pill">
+                  <span class="step-circle">2</span>
+                  <span><strong>Parallel Evidence Gathering</strong>: Answers each sub-question with citations</span>
+                </div>
+                <div class="workflow-step-pill">
+                  <span class="step-circle">3</span>
+                  <span><strong>Meta-Synthesis</strong>: Synthesizes sub-answers into an exhaustive report</span>
+                </div>
+                <div class="workflow-step-pill">
+                  <span class="step-circle">4</span>
+                  <span><strong>Inspectable Steps</strong>: Review each sub-question in the response plan</span>
+                </div>
+              </div>
+
+              <div id="plan-queries-container" style="margin-top: 18px;">
+                <!-- Dynamically rendered based on whether user has documents or empty library -->
+              </div>
+            </div>
+          </div>
         </section>
-        <section id="answer-section" class="answer-panel hidden" aria-live="polite"><div class="panel-heading"><div><p class="kicker">GROUNDED RESPONSE</p><h2>Research answer</h2></div><span id="candidate-count" class="count-pill"></span></div><div id="answer" class="answer-text"></div><div class="sources-heading"><h3>Evidence used</h3><p>Open a source to inspect the retrieved passage.</p></div><div id="citations" class="citation-list"></div></section>
+
+        <!-- Response Panel -->
+        <section id="answer-section" class="answer-panel hidden" aria-live="polite">
+          <div class="panel-heading">
+            <div>
+              <p class="kicker" id="response-mode-label">GROUNDED RESPONSE</p>
+              <h2>Research answer</h2>
+            </div>
+            <span id="candidate-count" class="count-pill"></span>
+          </div>
+
+          <div id="plan-steps-container" class="plan-steps-container hidden">
+            <details class="plan-steps-details" open>
+              <summary>
+                <span class="plan-badge">🧠 Research Plan</span>
+                <span id="plan-step-count"></span>
+              </summary>
+              <div id="plan-steps-list" class="plan-steps-list"></div>
+            </details>
+          </div>
+
+          <div id="answer" class="answer-text"></div>
+          <div class="sources-heading">
+            <h3>Evidence used</h3>
+            <p>Open a source to inspect the retrieved passage.</p>
+          </div>
+          <div id="citations" class="citation-list"></div>
+        </section>
+
+        <!-- Library, Search, Evaluation Grid -->
         <section class="dashboard-grid">
-          <article id="library" class="workspace-card"><div class="panel-heading"><div><p class="kicker">YOUR LIBRARY</p><h2>Add a source</h2></div></div><p class="card-copy">Upload a PDF, text file, or Markdown note. We split it into citeable passages and add it to both semantic and keyword search.</p><form id="upload-form"><label class="upload-zone" for="document"><input id="document" type="file" accept=".pdf,.txt,.md,.markdown" required /><span class="upload-icon">↑</span><strong>Choose a file</strong><small>PDF, TXT, or MD</small></label><button id="upload-button" class="quiet-button full-button" type="submit">Add to library</button></form><p id="upload-result" class="message" role="status"></p></article>
-          <article class="workspace-card"><div class="panel-heading"><div><p class="kicker">RETRIEVAL</p><h2>Search the evidence</h2></div></div><form id="search-form" class="search-form"><input id="search-query" required minlength="1" placeholder="Find a passage…" /><button type="submit" aria-label="Search">⌕</button></form><div id="search-results" class="search-results empty">Search across your indexed research.</div></article>
-          <article id="evaluation" class="workspace-card evaluation-card"><div class="panel-heading"><div><p class="kicker">QUALITY CONTROL</p><h2>Ragas evaluation</h2></div><button id="refresh-evaluation" class="text-button" type="button">Refresh</button></div><div id="evaluation-results" class="evaluation-results empty">No report is available yet.</div><p class="footnote">Run <code>python -m app.evaluation.runner</code> after updating the ground-truth file.</p></article>
+          <article id="library" class="workspace-card library-card">
+            <div class="panel-heading">
+              <div>
+                <p class="kicker">YOUR LIBRARY</p>
+                <h2>Document Library</h2>
+              </div>
+            </div>
+            <p class="card-copy">Upload a PDF, text file, or Markdown note. Passages are indexed for both semantic and lexical BM25 search.</p>
+            <form id="upload-form">
+              <label class="upload-zone" for="document">
+                <input id="document" type="file" accept=".pdf,.txt,.md,.markdown" required />
+                <span class="upload-icon">↑</span>
+                <strong>Choose a file</strong>
+                <small>PDF, TXT, or MD</small>
+              </label>
+              <button id="upload-button" class="quiet-button full-button" type="submit">Add to library</button>
+            </form>
+            <p id="upload-result" class="message" role="status"></p>
+
+            <div class="library-documents-section">
+              <div class="library-header">
+                <h3>Indexed Papers (<span id="document-count">0</span>)</h3>
+                <button id="refresh-library" class="text-button" type="button">Refresh</button>
+              </div>
+              <div id="library-documents-list" class="library-documents-list">Loading indexed documents…</div>
+            </div>
+          </article>
+
+          <article class="workspace-card">
+            <div class="panel-heading">
+              <div>
+                <p class="kicker">RETRIEVAL</p>
+                <h2>Search the evidence</h2>
+              </div>
+            </div>
+            <form id="search-form" class="search-form">
+              <input id="search-query" required minlength="1" placeholder="Find a passage…" />
+              <button type="submit" aria-label="Search">⌕</button>
+            </form>
+            <div id="search-results" class="search-results empty">Search across your indexed research.</div>
+          </article>
+
+          <article id="evaluation" class="workspace-card evaluation-card">
+            <div class="panel-heading">
+              <div>
+                <p class="kicker">QUALITY CONTROL</p>
+                <h2>Ragas evaluation</h2>
+              </div>
+              <button id="refresh-evaluation" class="text-button" type="button">Refresh</button>
+            </div>
+            <div id="evaluation-results" class="evaluation-results empty">No report is available yet.</div>
+            <p class="footnote">Run <code>python -m app.evaluation.runner</code> after updating the ground-truth file.</p>
+          </article>
         </section>
       </main>
     </div>
-    <script src="/assets/app.js" defer></script>
+
+    <script src="/assets/app.js?v=1.0.6" defer></script>
   </body>
 </html>

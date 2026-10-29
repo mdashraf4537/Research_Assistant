@@ -9,8 +9,19 @@ from app.agent.plan import GeminiResearchPlanner, PlanAndExecuteAgentService
 from app.agent.service import ResearchAgentService
 from app.answering.adapters import CohereReranker, DeepSeekChatClient
 from app.answering.service import ResearchAnswerService
+from app.answering.web_rag import WebSearchRagService
 from app.core.config import get_settings
 from app.core.errors import UpstreamServiceError
+from app.core.tracking import (
+    delete_user_document,
+    get_recent_queries,
+    get_tracked_users,
+    get_user_documents,
+    identify_or_register_user,
+    is_document_owned_by_other_users,
+    log_user_query,
+    record_user_document,
+)
 from app.evaluation.runner import ground_truth_sha256, load_cached_report
 from app.ingestion.adapters import ChromaChunkStore, OllamaEmbeddingClient
 from app.ingestion.extractors import IngestionValidationError
@@ -61,10 +72,31 @@ class AnswerResponse(BaseModel):
     answer: str
     citations: list[CitationResponse]
     retrieval_candidate_count: int
+    source_mode: str = "knowledge_base"
 
 
 class AskRequest(BaseModel):
     question: str
+    search_mode: str = "auto"
+    user_email: str | None = None
+
+
+class IdentifyRequest(BaseModel):
+    email: str
+
+
+class IdentifyResponse(BaseModel):
+    email: str
+    first_seen_at: str
+    last_seen_at: str
+    query_count: int
+    is_new: bool
+
+
+class AdminUsersResponse(BaseModel):
+    total_users: int
+    users: list[dict]
+    recent_queries: list[dict]
 
 
 class PlanAnswerResponse(AnswerResponse):
@@ -78,6 +110,23 @@ class EvaluationSummaryResponse(BaseModel):
     averages: dict[str, float]
     targets: dict[str, float]
     passed: bool
+
+
+class DocumentItem(BaseModel):
+    filename: str
+    chunk_count: int
+    page_count: int
+
+
+class DeleteDocumentResponse(BaseModel):
+    filename: str
+    deleted_chunks: int
+
+
+class AgentToolInfo(BaseModel):
+    name: str
+    description: str
+
 
 
 def get_ingestion_service() -> IngestionService:
@@ -125,17 +174,29 @@ def get_answer_service() -> ResearchAnswerService:
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Answer generation is not configured.",
         )
+    llm = DeepSeekChatClient(
+        api_key=settings.deepseek_api_key.get_secret_value(),
+        model=settings.deepseek_model,
+        max_output_tokens=settings.answer_max_completion_tokens,
+    )
+    web_rag = WebSearchRagService(
+        llm=llm,
+        gemini_api_key=(
+            settings.gemini_api_key.get_secret_value()
+            if settings.gemini_api_key is not None
+            else None
+        ),
+        gemini_model=settings.gemini_model,
+    )
     return ResearchAnswerService(
         retriever=get_hybrid_retriever(),
         reranker=CohereReranker(
             api_key=settings.cohere_api_key.get_secret_value(),
             model=settings.cohere_rerank_model,
         ),
-        llm=DeepSeekChatClient(
-            api_key=settings.deepseek_api_key.get_secret_value(),
-            model=settings.deepseek_model,
-            max_output_tokens=settings.answer_max_completion_tokens,
-        ),
+        llm=llm,
+        final_count=settings.retrieval_final_count,
+        web_rag=web_rag,
     )
 
 
@@ -151,6 +212,7 @@ def get_research_agent_service() -> ResearchAgentService:
         gemini_api_key=settings.gemini_api_key.get_secret_value(),
         model=settings.gemini_model,
         recursion_limit=settings.agent_recursion_limit,
+        lexical_index=SqliteBm25Index(settings.lexical_index_path),
     )
 
 
@@ -199,9 +261,12 @@ async def readiness() -> HealthResponse:
 async def ingest_document(
     file: Annotated[UploadFile, File(...)],
     service: Annotated[IngestionService, Depends(get_ingestion_service)],
+    user_email: Annotated[str | None, Query()] = None,
 ) -> IngestionResponse:
     try:
         result = await service.ingest(filename=file.filename or "", content=await file.read())
+        if user_email:
+            record_user_document(user_email, result.filename, result.chunk_count)
     except IngestionValidationError as exc:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc)
@@ -213,12 +278,91 @@ async def ingest_document(
     return IngestionResponse(**result.__dict__)
 
 
+@router.get(
+    "/documents",
+    response_model=list[DocumentItem],
+    summary="List all indexed research documents in the library",
+)
+async def list_documents(user_email: Annotated[str | None, Query()] = None) -> list[DocumentItem]:
+    settings = get_settings()
+    index = SqliteBm25Index(settings.lexical_index_path)
+    all_docs = index.list_indexed_documents()
+    all_docs_map = {str(doc["filename"]): doc for doc in all_docs}
+
+    if user_email:
+        cleaned_email = user_email.strip().lower()
+        user_docs = get_user_documents(cleaned_email)
+        
+        # If user is mdashraf228144@gmail.com and has no records yet, link all current docs
+        if not user_docs and cleaned_email == "mdashraf228144@gmail.com":
+            for d in all_docs:
+                record_user_document(cleaned_email, str(d["filename"]), int(d["chunk_count"]))
+            user_docs = get_user_documents(cleaned_email)
+
+        if user_docs:
+            result = []
+            for ud in user_docs:
+                fn = ud["filename"]
+                if fn in all_docs_map:
+                    doc = all_docs_map[fn]
+                    result.append(
+                        DocumentItem(
+                            filename=fn,
+                            chunk_count=int(doc["chunk_count"]),
+                            page_count=int(doc["page_count"]),
+                        )
+                    )
+            return result
+        # Any other user with no documents uploaded yet has an isolated, empty library
+        return []
+
+    return [
+        DocumentItem(
+            filename=str(doc["filename"]),
+            chunk_count=int(doc["chunk_count"]),
+            page_count=int(doc["page_count"]),
+        )
+        for doc in all_docs
+    ]
+
+
+@router.delete(
+    "/documents/{filename}",
+    response_model=DeleteDocumentResponse,
+    summary="Delete an indexed document from semantic and lexical stores",
+)
+async def delete_document(
+    filename: str,
+    service: Annotated[IngestionService, Depends(get_ingestion_service)],
+    user_email: Annotated[str | None, Query()] = None,
+) -> DeleteDocumentResponse:
+    chunk_store = service._chunk_store
+    deleted = 0
+    if user_email:
+        delete_user_document(user_email, filename)
+        # If no other user has this document, delete chunks from physical stores
+        if not is_document_owned_by_other_users(filename, user_email):
+            if hasattr(chunk_store, "delete_document"):
+                deleted = chunk_store.delete_document(filename)
+    else:
+        if hasattr(chunk_store, "delete_document"):
+            deleted = chunk_store.delete_document(filename)
+    return DeleteDocumentResponse(filename=filename, deleted_chunks=deleted)
+
+
+
 @router.get("/search", response_model=SearchResponse, summary="Hybrid document search")
 async def hybrid_search(
     query: Annotated[str, Query(min_length=1, max_length=1000)],
     retriever: Annotated[HybridRetriever, Depends(get_hybrid_retriever)],
+    user_email: Annotated[str | None, Query()] = None,
 ) -> SearchResponse:
     results = await retriever.search(query)
+    if user_email:
+        cleaned_email = user_email.strip().lower()
+        user_docs = get_user_documents(cleaned_email)
+        allowed_filenames = {d["filename"] for d in user_docs}
+        results = [hit for hit in results if str(hit.metadata.get("filename")) in allowed_filenames]
     return SearchResponse(
         query=query,
         results=[
@@ -235,6 +379,36 @@ async def hybrid_search(
     )
 
 
+@router.post(
+    "/auth/identify",
+    response_model=IdentifyResponse,
+    summary="Register or verify user email for access tracking",
+)
+async def identify_user(request: IdentifyRequest) -> IdentifyResponse:
+    try:
+        user_info = identify_or_register_user(request.email)
+        return IdentifyResponse(**user_info)
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc)
+        ) from exc
+
+
+@router.get(
+    "/admin/users",
+    response_model=AdminUsersResponse,
+    summary="List all tracked users and query activity for admin oversight",
+)
+async def admin_list_users() -> AdminUsersResponse:
+    users = get_tracked_users()
+    recent = get_recent_queries(limit=100)
+    return AdminUsersResponse(
+        total_users=len(users),
+        users=users,
+        recent_queries=recent,
+    )
+
+
 @router.post("/ask", response_model=AnswerResponse, summary="Answer from cited research evidence")
 async def ask_research_assistant(
     request: AskRequest,
@@ -246,8 +420,10 @@ async def ask_research_assistant(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Question must be between 3 and 4000 characters.",
         )
+    if request.user_email:
+        log_user_query(request.user_email, question, f"direct:{request.search_mode}")
     try:
-        result = await service.answer(question)
+        result = await service.answer(question, search_mode=request.search_mode)
     except UpstreamServiceError as exc:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)
@@ -264,6 +440,7 @@ async def ask_research_assistant(
             for citation in result.citations
         ],
         retrieval_candidate_count=result.candidate_count,
+        source_mode=result.source_mode,
     )
 
 
@@ -280,6 +457,8 @@ async def ask_research_agent(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Question must be between 3 and 4000 characters.",
         )
+    if request.user_email:
+        log_user_query(request.user_email, question, "agent")
     try:
         result = await service.ask(question)
     except UpstreamServiceError as exc:
@@ -316,6 +495,8 @@ async def ask_plan_research_agent(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Question must be between 3 and 4000 characters.",
         )
+    if request.user_email:
+        log_user_query(request.user_email, question, "plan")
     try:
         result = await service.ask(question)
     except UpstreamServiceError as exc:
@@ -337,6 +518,44 @@ async def ask_plan_research_agent(
         sub_questions=result.sub_questions,
         sub_answers=result.sub_answers,
     )
+
+
+@router.get(
+    "/agent/tools",
+    response_model=list[AgentToolInfo],
+    summary="List available agent tools and capabilities",
+)
+async def list_agent_tools() -> list[AgentToolInfo]:
+    return [
+        AgentToolInfo(
+            name="research_documents",
+            description="Answer research questions with rigorous citation-backed evidence.",
+        ),
+        AgentToolInfo(
+            name="search_corpus",
+            description="Raw multi-source snippet retrieval without LLM synthesis.",
+        ),
+        AgentToolInfo(
+            name="read_chunk",
+            description="Inspect full passages or pages from any document by filename and page.",
+        ),
+        AgentToolInfo(
+            name="summarize_document",
+            description="Comprehensive structured summary of a research paper.",
+        ),
+        AgentToolInfo(
+            name="compare_documents",
+            description="Side-by-side comparative analysis of methodologies and performance.",
+        ),
+        AgentToolInfo(
+            name="extract_metrics_table",
+            description="Extract quantitative metrics into a cited Markdown comparison table.",
+        ),
+        AgentToolInfo(
+            name="plan_and_execute",
+            description="Decompose complex questions into sub-questions and synthesize cited findings.",
+        ),
+    ]
 
 
 @router.get(

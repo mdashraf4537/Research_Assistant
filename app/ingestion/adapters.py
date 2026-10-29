@@ -66,3 +66,10 @@ class ChromaChunkStore:
                 strict=True,
             )
         ]
+
+    def delete(self, filename: str) -> None:
+        try:
+            self._collection.delete(where={"filename": filename})
+        except Exception:
+            pass
+

@@ -15,3 +15,4 @@ class AnswerResult:
     answer: str
     citations: list[Citation]
     candidate_count: int
+    source_mode: str = "knowledge_base"

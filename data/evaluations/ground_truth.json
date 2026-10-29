@@ -1,0 +1,113 @@
+[
+  {
+    "user_input": "What is the title of the research paper on the explainable AI framework for CT stroke classification and who are the primary authors?",
+    "reference": "The title of the research paper is \"An Explainable AI Framework for Stroke Classification Based on CT Brain Images\" and the primary authors are Serra Aksoy, Pinar Demircioglu, and Ismail Bogrekci.",
+    "reference_contexts": [
+      "Article\nAn Explainable AI Framework for Stroke Classification Based on\nCT Brain Images\nSerra Aksoy 1\n, Pinar Demircioglu 2,* and Ismail Bogrekci 2"
+    ]
+  },
+  {
+    "user_input": "What overall test accuracy did the fine-tuned ResNet-18 model achieve on the independent held-out test set in the XRAI-based CT stroke study?",
+    "reference": "The fine-tuned ResNet-18 model achieved an overall test accuracy of 95% when evaluated on the independent held-out test set.",
+    "reference_contexts": [
+      "The final model achieved an overall test accuracy of 95% when evaluated on the independent test set, demonstrating very good generalization ability to unseen data.",
+      "The model performed at a test accuracy of 95%, with strong performance throughout all three diagnostic classes."
+    ]
+  },
+  {
+    "user_input": "How many total CT brain scans were included in the dataset for the ResNet-18 stroke study, how many were allocated to training, and what were the three diagnostic categories?",
+    "reference": "The dataset comprised 6653 CT brain scans in total, with 4655 scans allocated to the training set (70% split), categorized into three diagnostic categories: normal, ischemic stroke (ischemia), and hemorrhagic stroke (bleeding).",
+    "reference_contexts": [
+      "In this paper, a ResNet-18 model was trained on 6653 CT brain scans (hemorrhagic stroke, ischemia, normal) with two-phase fine-tuning and transfer learning, XRAI\nexplainability analysis, and web-based clinical decision support system integration.",
+      "Each CT scan slice in the dataset is labeled with one of three diagnostic categories: normal (indicating no evidence of stroke), ischemic stroke, or hemorrhagic stroke due to intracranial bleeding. Among the 6653 images, 4428 are labeled as normal, 1131 as ischemic stroke, and 1094 as hemorrhagic stroke... The training set comprised 765 cases of hemorrhagic stroke, 791 ischemic cases, and 3099 normal cases."
+    ]
+  },
+  {
+    "user_input": "What was the distribution of images among the three diagnostic categories in the full dataset of the XRAI CT stroke study?",
+    "reference": "Among the 6653 images, 4428 are labeled as normal, 1131 as ischemic stroke, and 1094 as hemorrhagic stroke.",
+    "reference_contexts": [
+      "Among the 6653 images, 4428 are labeled as normal, 1131 as\nischemic stroke, and 1094 as hemorrhagic stroke (Figure 1)."
+    ]
+  },
+  {
+    "user_input": "What were the precision, recall, and F1-score for hemorrhagic stroke cases in the test set of the ResNet-18 study?",
+    "reference": "For the hemorrhagic stroke cases, the model had a precision of 0.96, recall of 0.91, and F1-score of 0.93.",
+    "reference_contexts": [
+      "For the hemorrhagic stroke cases, the model had a precision of 0.96, recall of 0.91, and F1-score of 0.93."
+    ]
+  },
+  {
+    "user_input": "What is the overall accuracy achieved by the developed hybrid model in identifying stroke risk after data augmentation?",
+    "reference": "After data augmentation, the proposed hybrid model reached an overall accuracy of 96% (0.96) in identifying stroke risk as low, medium, or high.",
+    "reference_contexts": [
+      "Table 5. Evaluation metrics of deep learning models and hybrid approach after data augmentation.\nProposed Hybrid Model Accuracy 0.96 Precision 0.94 Recall 0.97 F1-Score 0.95",
+      "By merging these models, we reached an overall accuracy of 96% in identifying stroke risk as low, medium, or high."
+    ]
+  },
+  {
+    "user_input": "In the study A Hybrid Deep Learning Approach for Improved Detection and Prediction of Brain Stroke by Thakre et al., what percentage of all strokes worldwide are ischemic strokes and what percentage are hemorrhagic strokes?",
+    "reference": "Ischemic strokes make up almost 87% of all strokes worldwide, while hemorrhagic strokes are liable for 10–15% of stroke cases around the world.",
+    "reference_contexts": [
+      "There are two essential kinds of strokes: ischemic and hemorrhagic strokes [1]. Ischemic strokes, which make up almost 87% of all strokes worldwide, happen when a blood coagulation or blockage keeps blood from arriving at the mind, denying it of oxygen and nutrients [1]. Hemorrhagic strokes, liable for 10–15% of stroke cases around the world, happen when a vein in the cerebrum breaks, causing draining and pressure that harms mind cells [1]."
+    ]
+  },
+  {
+    "user_input": "In the XRAI-based ResNet-18 stroke classification study, what were the precision, recall, and F1-score for normal cases in the test set?",
+    "reference": "Classification of normal cases achieved a precision of 0.98, recall of 0.97, and F1-score of 0.97.",
+    "reference_contexts": [
+      "Classification of normal cases achieved the best performance metrics with precision equal to 0.98, recall equal to 0.97, and F1-score equal to 0.97. Better performance for normal cases illustrates the ability of the model to distinguish between pathological and normal brain imaging, which is crucial for reducing false positives in clinical practice."
+    ]
+  },
+  {
+    "user_input": "What exact search terms and databases were utilized in the review methodology of the hybrid deep learning stroke study?",
+    "reference": "The literature search was conducted across PubMed, Web of Science, and Scopus using the specific terms: \"brain stroke\", \"deep learning\", \"stroke prediction\", \"artificial intelligence\", and \"machine learning\".",
+    "reference_contexts": [
+      "Extensive searches were conducted across significant academic databases such as PubMed, Web of Science, and Scopus to collect pertinent research papers, reviews, and reports published between 2008 and 2024. The search used specific terms like \"brain stroke\", \"deep learning\", \"stroke prediction\", \"artificial intelligence\", and \"machine learning\"."
+    ]
+  },
+  {
+    "user_input": "Which deep learning models are integrated into the hybrid deep learning approach for improved brain stroke detection and prediction?",
+    "reference": "The hybrid deep learning approach investigates and integrates recurrent neural networks (RNNs), long short-term memory (LSTM), and convolutional neural networks (CNNs) to improve stroke prediction accuracy.",
+    "reference_contexts": [
+      "This research investigates the use of hybrid deep learning models, such as recurrent neural networks (RNNs), long short-term memory (LSTM), and convolutional neural networks (CNNs), to improve stroke prediction accuracy."
+    ]
+  },
+  {
+    "user_input": "What primary challenge occurs in brain CT image classification when utilizing machine learning and deep learning algorithms for minority stroke lesions in the StyleGAN study?",
+    "reference": "Brain computed tomography image classification frequently suffers from a class imbalance problem, making it difficult to effectively extract deep-detailed features from instances of minority stroke lesions.",
+    "reference_contexts": [
+      "However, brain computed tomography image classification using machine learning and deep learning algorithms frequently suffers from a class imbalance problem, making it difficult to effectively extract deep-detailed features from instances of minority stroke lesions.",
+      "However, in actual medical applications, stroke examples are significantly fewer than normal samples, leading to an imbalance in class distribution. This causes traditional classification models to lean towards normal examples during training, thereby negatively affecting stroke detection accuracy."
+    ]
+  },
+  {
+    "user_input": "What three StyleGAN-based data augmentation approaches were systematically implemented in the brain CT stroke study?",
+    "reference": "The study systematically implemented three style-based generative adversarial network (StyleGAN)-based data augmentation approaches: StyleGAN2, StyleGAN3, and conditional StyleGAN3.",
+    "reference_contexts": [
+      "In this study, we systematically implement three style-based generative adversarial network (StyleGAN)-based data augmentation approaches: StyleGAN2, StyleGAN3, and conditional StyleGAN3 to address class imbalance in brain stroke classification."
+    ]
+  },
+  {
+    "user_input": "Which StyleGAN approach achieved the best overall classification performance for the imbalanced brain stroke classification task and what accuracy did it achieve?",
+    "reference": "StyleGAN3 (SG3) achieved the best overall classification performance among the three approaches, achieving a classification accuracy score of 0.852 ± 0.016.",
+    "reference_contexts": [
+      "Among the three StyleGAN-based approaches, SG3 achieved the best classification accuracy score of 0.852 ± 0.01. CSG3 presented a better classification accuracy score of 0.837 ± 0.01, and SG2 achieved a score of 0.829 ± 0.02, as shown in Table 2 and Figure 2.",
+      "Table 2. Results of average and standard deviation.\nMethod StyleGAN3 (SG3) Accuracy Average 0.852 SD 0.016",
+      "Experimental results show that StyleGAN3 effectively outperforms the other two StyleGAN data augmentation approaches in terms of precision, recall, and F1-score when addressing highly imbalanced brain stroke classification."
+    ]
+  },
+  {
+    "user_input": "What hardware was used to conduct the experiments in the StyleGAN brain CT data augmentation study?",
+    "reference": "All experiments were conducted on a computer equipped with an Intel(R) Core(TM) i7-14700KF CPU (27-processor) and Nvidia GeForce RTX 4090 graphics (24 gigabytes random access memory) running Ubuntu 24.04 LTS.",
+    "reference_contexts": [
+      "All experiments were conducted on a computer equipped with an Intel(R) Core(TM) i7-14700KF CPU (27-processor) and Nvidia GeForce RTX 4090 graphics (24 gigabytes random access memory) running Ubuntu 24.04 LTS."
+    ]
+  },
+  {
+    "user_input": "In the StyleGAN brain CT data augmentation study, which model achieved the lowest FID score and at how many training images?",
+    "reference": "Conditional StyleGAN3 (CSG3) achieved the lowest (best) FID score of 63.62 at 1000 k training images.",
+    "reference_contexts": [
+      "Here, SG2 achieved the lowest FID score of 65.91 with 400 k images. SG3 reached FID's score at 101.04 with 1000 k images. CSG3 achieved the best FID at 63.62 with 1000 k images."
+    ]
+  }
+]

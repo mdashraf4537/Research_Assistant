@@ -1,11 +1,39 @@
-.env
-.venv/
+# Python virtual environment & bytecode
 __pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# Environment variables & secrets (CRITICAL: never commit secrets)
+.env
+*.env.local
+
+# Testing, coverage, linting caches
 .pytest_cache/
 .ruff_cache/
 coverage.xml
 htmlcov/
-data/
-outputs/
 pytest-of-ASUS/
+.coverage
+.coverage.*
+
+# IDE & OS files
+.vscode/
+.idea/
+.qodo/
+.DS_Store
+Thumbs.db
+
+# Runtime database & vector stores (generated at runtime)
+data/chroma/
+data/*.db
+data/*.sqlite3
+data/evaluations/results/
+!data/evaluations/ground_truth.json
+
+# Temporary working folders
+outputs/
 work/
+scratch/

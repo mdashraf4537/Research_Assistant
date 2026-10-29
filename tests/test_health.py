@@ -25,3 +25,23 @@ def test_dashboard_and_assets_are_served() -> None:
     assert dashboard.status_code == 200
     assert "Make sense of the evidence" in dashboard.text
     assert stylesheet.status_code == 200
+
+
+def test_agent_tools_endpoint() -> None:
+    with TestClient(create_app()) as client:
+        response = client.get("/api/v1/agent/tools")
+    assert response.status_code == 200
+    tools = response.json()
+    names = {t["name"] for t in tools}
+    assert "research_documents" in names
+    assert "search_corpus" in names
+    assert "extract_metrics_table" in names
+    assert "compare_documents" in names
+
+
+def test_list_documents_endpoint() -> None:
+    with TestClient(create_app()) as client:
+        response = client.get("/api/v1/documents")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+

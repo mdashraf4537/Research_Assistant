@@ -28,12 +28,17 @@ class HybridRetriever:
         query = query.strip()
         if not query:
             return []
-        embedding_task = self._embedding_client.embed([query])
         lexical_task = asyncio.to_thread(self._lexical_index.search, query, self._candidate_count)
-        embeddings, lexical_hits = await asyncio.gather(embedding_task, lexical_task)
-        semantic_hits = await asyncio.to_thread(
-            self._semantic_store.search, embeddings[0], self._candidate_count
-        )
+        try:
+            embeddings = await self._embedding_client.embed([query])
+            semantic_hits = await asyncio.to_thread(
+                self._semantic_store.search, embeddings[0], self._candidate_count
+            )
+        except Exception:
+            semantic_hits = []
+        lexical_hits = await lexical_task
+        if not semantic_hits:
+            return lexical_hits[: self._final_count]
         return self._reciprocal_rank_fusion((lexical_hits, semantic_hits))
 
     def _reciprocal_rank_fusion(
