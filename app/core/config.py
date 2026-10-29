@@ -41,7 +41,7 @@ class Settings(BaseSettings):
     cohere_rerank_model: str = "rerank-v4.0-pro"
     gemini_api_key: SecretStr | None = None
     gemini_model: str = "gemini-2.5-flash"
-    answer_max_completion_tokens: int = 4096
+    answer_max_completion_tokens: int = 8192
     agent_recursion_limit: int = 4
     agent_plan_max_subquestions: int = 4
     agent_plan_max_completion_tokens: int = 8192
@@ -50,6 +50,8 @@ class Settings(BaseSettings):
     deepseek_api_key: SecretStr | None = None
     deepseek_model: str = "deepseek-v4-flash"
     evaluation_deepseek_model: str = "deepseek-v4-flash"
+    deepseek_thinking_enabled: bool = True
+    deepseek_reasoning_effort: str = "low"
     admin_email: str = "mdashraf228144@gmail.com"
     default_query_limit: int = 2
 

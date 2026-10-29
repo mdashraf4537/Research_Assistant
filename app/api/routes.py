@@ -213,6 +213,8 @@ def get_answer_service() -> ResearchAnswerService:
         api_key=settings.deepseek_api_key.get_secret_value(),
         model=settings.deepseek_model,
         max_output_tokens=settings.answer_max_completion_tokens,
+        thinking_enabled=settings.deepseek_thinking_enabled,
+        reasoning_effort=settings.deepseek_reasoning_effort,
     )
     web_rag = WebSearchRagService(
         llm=llm,
@@ -269,6 +271,8 @@ def get_plan_agent_service() -> PlanAndExecuteAgentService:
             api_key=settings.deepseek_api_key.get_secret_value(),
             model=settings.deepseek_model,
             max_output_tokens=settings.agent_plan_max_completion_tokens,
+            thinking_enabled=settings.deepseek_thinking_enabled,
+            reasoning_effort=settings.deepseek_reasoning_effort,
         ),
         max_subquestions=settings.agent_plan_max_subquestions,
     )
